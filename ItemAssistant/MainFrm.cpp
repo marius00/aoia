@@ -115,7 +115,7 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
     HICON hIconSmall = (HICON)::LoadImage(_Module.GetResourceInstance(), MAKEINTRESOURCE(IDR_MAINFRAME), 
         IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), LR_DEFAULTCOLOR);
     m_trayIcon = boost::shared_ptr<CTrayNotifyIcon>(new CTrayNotifyIcon());
-    m_trayIcon->Create(this, IDR_TRAY_POPUP, _T("AO Item Assistant +"), hIconSmall, WM_TRAYICON);
+    m_trayIcon->Create(this, IDR_TRAY_POPUP, _T("AO Item Assistant++"), hIconSmall, WM_TRAYICON);
 
     // Create common services
     m_containerManager.reset(new ContainerManager(g_DBManager.GetDatabase()));
@@ -343,7 +343,7 @@ LRESULT CMainFrame::OnTimer(UINT wParam)
         bool injected = Inject();
         if (injected && first_injection_try) {
             // Show warning about AO being started before AOIA
-            m_guiServices->ShowTrayIconBalloon(_T("Anarchy Online was started before Item Assistant +.\nThe database might be out of sync for the current toon."));
+            m_guiServices->ShowTrayIconBalloon(_T("Anarchy Online was started before Item Assistant++.\nThe database might be out of sync for the current toon."));
         }
         first_injection_try = false;
         SetTimer(1, 10000);

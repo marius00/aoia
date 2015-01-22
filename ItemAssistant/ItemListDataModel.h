@@ -49,6 +49,9 @@ namespace aoia
         /// Return the name of a specified item.
         virtual std::tstring getItemProperty(unsigned int index, unsigned int column) const;
 
+		// Returns the container id of specified item
+		bool getItemContainerId(unsigned int index, unsigned int& charid, unsigned int& containerid) const;
+
         /// Return the AOID of the specified item.
         unsigned int getItemId(unsigned int index) const;
 
@@ -60,6 +63,8 @@ namespace aoia
 
         /// Delete the specified items from the database, and signal changes to observers.
         void DeleteItems( std::set<unsigned int> const& ids );
+
+		void selectItemContainerId(unsigned int containerid);
 
     protected:
         // Enumeration of publicly visible columns.

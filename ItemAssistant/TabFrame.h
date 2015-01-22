@@ -6,6 +6,7 @@
 #include "PatternMatchView.h"
 //#include "PlayershopView.h"
 #include "IdentifyView.h"
+#include "RecipesView.h"
 #include "SummaryView.h"
 
 #ifdef _DEBUG
@@ -50,6 +51,7 @@ private:
     AoMsgView           m_msgView;
 #endif
     PatternMatchView    m_patternView;
+	RecipesView			m_recipesView;
 //    PlayershopView      m_playershopView;
     IdentifyView        m_identifyView;
     aoia::sv::SummaryView m_summaryView;

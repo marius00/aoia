@@ -58,7 +58,7 @@ bool DBManager::init(std::tstring dbfile)
     if (dbVersion < CURRENT_DB_VERSION)
     {
         if (IDOK != MessageBox(NULL, _T("AO Item Assistant needs to update its database file to a newer version."),
-                               _T("Question - AO Item Assistant +"), MB_OKCANCEL | MB_ICONQUESTION))
+                               _T("Question - AO Item Assistant++"), MB_OKCANCEL | MB_ICONQUESTION))
         {
             return false;
         }
@@ -68,14 +68,14 @@ bool DBManager::init(std::tstring dbfile)
     {
         MessageBox(NULL,
                    _T("AO Item Assistant has detected a too new version of its database file. You should upgrade the software to continue."),
-                   _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
+                   _T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
         return false;
     }
 
     if (!syncLocalItemsDB(_T("aoitems.db"), aofolder))
     {
         MessageBox(NULL, _T("AO Item Assistant cannot start without a valid item database."),
-                   _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
+                   _T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
         return false;
     }
 
@@ -129,7 +129,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
         // Ask user if he wants to continue using the old (but compatible) DB or update it now.
         int answer = ::MessageBox(NULL,
                                   _T("You items database is out of date. Do you wish to update it now?\r\nAnswering 'NO' will continue using the old one."),
-                                  _T("Question - AO Item Assistant +"), MB_ICONQUESTION | MB_YESNOCANCEL);
+                                  _T("Question - AO Item Assistant++"), MB_ICONQUESTION | MB_YESNOCANCEL);
         if (answer == IDCANCEL)
         {
             exit(0);
@@ -185,7 +185,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
                 dlg.setTaskProgress(count, itemCount);
                 dlg.setText(1, STREAM2STR("Finished " << count << " out of " << itemCount << " items."));
                 dlg.setOverallProgress(count, itemCount + nanoCount);
-                dlg.setText(2, STREAM2STR("Overall progress: " << (count * 100) / (itemCount + nanoCount) << "%"));
+                dlg.setText(2, STREAM2STR("Overall progress: " << (count * 100) / max(1, itemCount + nanoCount) << "%"));
             }
             if (count % 10000 == 0) {
                 writer.CommitItems();
@@ -196,7 +196,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
         dlg.setTaskProgress(count, itemCount);
         dlg.setText(1, STREAM2STR("Finished " << count << " out of " << itemCount << " items."));
         dlg.setOverallProgress(count, itemCount + nanoCount);
-        dlg.setText(2, STREAM2STR("Overall progress: " << (count * 100) / (itemCount + nanoCount) << "%"));
+        dlg.setText(2, STREAM2STR("Overall progress: " << (count * 100) / max(1, itemCount + nanoCount) << "%"));
         writer.CommitItems();
 
         if (dlg.userCanceled())
@@ -227,7 +227,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
                 dlg.setTaskProgress(count, nanoCount);
                 dlg.setText(1, STREAM2STR("Finished " << count << " out of " << nanoCount << " nanos."));
                 dlg.setOverallProgress(itemCount + count, itemCount + nanoCount);
-                dlg.setText(2, STREAM2STR("Overall progress: " << ((itemCount + count) * 100) / (itemCount +
+                dlg.setText(2, STREAM2STR("Overall progress: " << ((itemCount + count) * 100) / max(1, itemCount +
                                           nanoCount) << "%"));
             }
             if (count % 10000 == 0)
@@ -240,7 +240,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
         dlg.setTaskProgress(count, nanoCount);
         dlg.setText(1, STREAM2STR("Finished " << count << " out of " << nanoCount << " nanos."));
         dlg.setOverallProgress(itemCount + count, itemCount + nanoCount);
-        dlg.setText(2, STREAM2STR("Overall progress: " << ((itemCount + count) * 100) / (itemCount + nanoCount) << "%"));
+        dlg.setText(2, STREAM2STR("Overall progress: " << ((itemCount + count) * 100) / max(1, itemCount + nanoCount) << "%"));
         writer.CommitItems();
 
         if (dlg.userCanceled())
@@ -256,7 +256,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
         LOG(_T("Error creating item database. ") << e.what());
         MessageBox(NULL,
                    _T("Unable to parse the AO database.\n\rMore details might be found in the log-file (if enabled)."),
-                   _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
+                   _T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
         return false;
     }
     catch (AODatabaseParser::Exception& e)
@@ -265,7 +265,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
         LOG(_T("Error creating item database. ") << e.what());
         MessageBox(NULL,
                    _T("Unable to parse the AO database.\n\rMore details might be found in the log-file (if enabled)."),
-                   _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
+                   _T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
         return false;
     }
     catch (std::exception& e)
@@ -274,7 +274,7 @@ bool DBManager::syncLocalItemsDB(std::tstring const& localfile, std::tstring con
         LOG(_T("Error creating item database. ") << e.what());
         MessageBox(NULL,
                    _T("Unable to parse the AO database.\n\rMore details might be found in the log-file (if enabled)."),
-                   _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
+                   _T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
         return false;
     }
  

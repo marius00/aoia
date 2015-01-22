@@ -35,6 +35,7 @@ public:
         REFLECTED_NOTIFY_CODE_HANDLER(TVN_SELCHANGED, OnSelChanged)
         REFLECTED_NOTIFY_CODE_HANDLER(TVN_GETDISPINFO, OnGetDispInfo)
         REFLECTED_NOTIFY_CODE_HANDLER(NM_RCLICK, OnRClick)
+		REFLECTED_NOTIFY_CODE_HANDLER(TVN_KEYDOWN, OnKeydown)
         REFLECTED_NOTIFY_CODE_HANDLER(TVN_BEGINLABELEDIT, OnLabelEditBegin)
         REFLECTED_NOTIFY_CODE_HANDLER(TVN_ENDLABELEDIT, OnLabelEditEnd)
         DEFAULT_REFLECTION_HANDLER()
@@ -49,6 +50,7 @@ protected:
     LRESULT OnRClick(int /*idCtrl*/, LPNMHDR pnmh, BOOL& bHandled);
     LRESULT OnLabelEditBegin(int /*idCtrl*/, LPNMHDR pnmh, BOOL& bHandled);
     LRESULT OnLabelEditEnd(int /*idCtrl*/, LPNMHDR pnmh, BOOL& bHandled);
+	LRESULT OnKeydown(int idCtrl, LPNMHDR pnmh, BOOL& bHandled);
 };
 
 

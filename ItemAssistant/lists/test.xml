@@ -1,0 +1,9 @@
+<Recipe name="Test recipe">
+  <Items>
+    <Item id="0" minql="0" maxql="0" count="555">Comments?</Item>
+    <Item id="2" minql="0" maxql="0" count="555"></Item>
+  </Items>
+  <Combos>
+    <Combo id="3" child1="0" child2="2"/>
+  </Combos>
+</Recipe>

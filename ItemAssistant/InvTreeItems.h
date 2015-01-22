@@ -30,6 +30,7 @@ protected:
         CMD_EDIT = 1,
         CMD_DELETE,
         CMD_EXPORT,
+		CMD_RENAME,
     };
 
     mutable std::map<unsigned int, InternalCommand> m_commands;
@@ -52,6 +53,7 @@ public:
     virtual bool HasChildren() const;
     virtual unsigned int AppendMenuCmd(HMENU hMenu, unsigned int firstID, WTL::CTreeItem item) const;
     virtual bool HandleMenuCmd(unsigned int commandID, WTL::CTreeItem item);
+	virtual void HandleMenuCmdRename(WTL::CTreeItem item);
 
 private:
     sqlite::IDBPtr m_db;
@@ -124,7 +126,7 @@ public:
    virtual unsigned int AppendMenuCmd(HMENU hMenu, unsigned int firstID, WTL::CTreeItem item) const;
    virtual bool HandleMenuCmd(unsigned int commandID, WTL::CTreeItem item);
 private:
-	virtual long DoesAccountHaveToons(boost::filesystem::path account_prefs) const;
+	virtual unsigned __int64 DoesAccountHaveToons(boost::filesystem::path account_prefs) const;
 	sqlite::IDBPtr m_db;
 	aoia::IContainerManagerPtr m_containerManager;
 };

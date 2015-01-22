@@ -25,6 +25,10 @@ namespace PatternMatcher
             IDD = IDD_PATTERN_MATCHER
         };
 
+		enum PbMode {
+			REGULAR, INF_CLAN, INF_OMNI
+		};
+
         typedef boost::signal<void ()> SettingsChangedSignal;
         typedef boost::signals::connection Connection;
 
@@ -34,6 +38,7 @@ namespace PatternMatcher
         // Access to properties in the filter GUI.
         unsigned int getCharId() const;
         float getAvailFilter() const;
+		PbMode FilterPanel::getMode() const;
         bool getExcludeAssembled() const;
 
         BOOL PreTranslateMsg(MSG* pMsg);
@@ -45,8 +50,10 @@ namespace PatternMatcher
             MESSAGE_HANDLER(WM_INITDIALOG, onInitDialog)
             MESSAGE_HANDLER(WM_FORWARDMSG, onForwardMsg)
             COMMAND_HANDLER(IDC_SHOW_ALL, BN_CLICKED, onBnClickedShowAll)
-            COMMAND_HANDLER(IDC_SHOW_PARTIALS, BN_CLICKED, onBnClickedShowPartials)
-            COMMAND_HANDLER(IDC_COMPLETABLE, BN_CLICKED, onBnClickedCompletable)
+			COMMAND_HANDLER(IDC_SHOW_PARTIALS, BN_CLICKED, onBnClickedShowPartials)
+			COMMAND_HANDLER(IDC_COMPLETABLE, BN_CLICKED, onBnClickedCompletable)
+			COMMAND_HANDLER(IDC_SHOW_INFERNO_CLAN, BN_CLICKED, onBnClickedInfClan)
+			COMMAND_HANDLER(IDC_SHOW_INFERNO_OMNI, BN_CLICKED, onBnClickedInfOmni)
             COMMAND_HANDLER(IDC_CHARCOMBO, CBN_SELCHANGE, onCbnSelchangeCharcombo)
             COMMAND_HANDLER(IDC_CHARCOMBO, CBN_DROPDOWN, OnCbnDropdown)
             COMMAND_HANDLER(IDC_EXCLUDE_ASSEMBLED, BN_CLICKED, onExcludeAssembledPatternsClicked)
@@ -63,8 +70,10 @@ namespace PatternMatcher
         LRESULT onForwardMsg(UINT/*uMsg*/, WPARAM/*wParam*/, LPARAM/*lParam*/, BOOL&/*bHandled*/);
         LRESULT onCbnSelchangeCharcombo(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
         LRESULT onBnClickedShowAll(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
-        LRESULT onBnClickedShowPartials(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
-        LRESULT onBnClickedCompletable(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
+		LRESULT onBnClickedShowPartials(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
+		LRESULT onBnClickedCompletable(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
+		LRESULT onBnClickedInfClan(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
+		LRESULT onBnClickedInfOmni(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
         LRESULT OnCbnDropdown(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
         LRESULT onExcludeAssembledPatternsClicked(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/);
 

@@ -182,6 +182,26 @@ namespace aoia {
     }
 
 
+	void DataGridControl::setSelectedItems(unsigned int containerId) {
+		
+		int lastId = -1;
+		do
+		{
+			lastId = m_listView.GetNextItem(lastId, LVNI_ALL);
+			if (lastId > -1) { 
+				LVITEM item;
+				
+				//int data = item.GetItemData(lastId);
+				
+				m_listView.SetItemState(13, 1, LVIS_SELECTED);
+				m_listView.SetSelectionMark(13);
+
+			}
+		}
+		while(lastId > -1);
+
+		
+	}
     std::set<unsigned int> DataGridControl::getSelectedItems() const
     {
         std::set<unsigned int> result;
@@ -203,6 +223,7 @@ namespace aoia {
 
     void DataGridControl::ClearSelection()
     {
+
         m_listView.SetItemState(-1, 0, LVIS_SELECTED);
     }
 

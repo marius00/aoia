@@ -124,8 +124,19 @@ namespace PatternMatcher
     }
 
 
-    float FilterPanel::getAvailFilter() const
-    {
+	FilterPanel::PbMode FilterPanel::getMode() const {
+		if (IsDlgButtonChecked(IDC_SHOW_INFERNO_CLAN)) {
+			return PbMode::INF_CLAN;
+		}
+		else if (IsDlgButtonChecked(IDC_SHOW_INFERNO_OMNI)) {
+			return PbMode::INF_OMNI;
+		}
+		else {
+			return PbMode::REGULAR;
+		}
+	}
+
+    float FilterPanel::getAvailFilter() const {
         float availfilter = -1.0f;
 
         if (IsDlgButtonChecked(IDC_SHOW_ALL))
@@ -145,8 +156,7 @@ namespace PatternMatcher
     }
 
 
-    bool FilterPanel::getExcludeAssembled() const
-    {
+    bool FilterPanel::getExcludeAssembled() const {
         return IsDlgButtonChecked(IDC_EXCLUDE_ASSEMBLED) == TRUE ? true : false;
     }
 
@@ -178,8 +188,15 @@ namespace PatternMatcher
     }
 
 
-    LRESULT FilterPanel::onBnClickedCompletable(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/)
-    {
+	LRESULT FilterPanel::onBnClickedInfClan(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/) {
+		signalSettingsChanged();
+		return 0;
+	}
+	LRESULT FilterPanel::onBnClickedInfOmni(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/) {
+		signalSettingsChanged();
+		return 0;
+	}
+    LRESULT FilterPanel::onBnClickedCompletable(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/, BOOL&/*bHandled*/) {
         signalSettingsChanged();
         return 0;
     }

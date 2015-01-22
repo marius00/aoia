@@ -13,12 +13,14 @@ namespace aoia { namespace sv {
         m_columnTitles = boost::assign::map_list_of
             (0, _T("Toon"))
             (1, _T("Levels"))
-            (2, _T("AI Levels"))
-            (3, _T("Credits"))
+			(2, _T("AI Levels"))
+			(3, _T("Credits"))
+			(4, _T("VP"))
+			(5, _T("Spec"))
             ;
 
         // Set ut a list of the statids each column should be bound to. (Hardcoded to skip "toon name" column further down.)
-        m_statids = boost::assign::list_of(54)(169)(61);
+        m_statids = boost::assign::list_of(54)(169)(61)(669)(182);
 
         std::tostringstream statids;
         for (unsigned int i = 0; i < m_statids.size(); ++i) {

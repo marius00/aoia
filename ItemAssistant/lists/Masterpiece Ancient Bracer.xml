@@ -1,0 +1,36 @@
+﻿<Recipe>
+  <Description>Masterpiece Ancient Bracer</Description>
+  <Items>
+    <Item id="267677" minql="0" maxql="300" count="3"></Item> <!-- This comment is in the file only -->
+    <Item id="267679" minql="0" maxql="300" count="3">this comment is visible inside aoia</Item>
+    <Item id="267737" minql="0" maxql="300" count="3"></Item> <!-- Inert Knowledge Crystal -->
+    <Item id="267704" minql="0" maxql="300" count="1"></Item> <!-- Sniper -->
+    <Item id="267697" minql="0" maxql="300" count="1">Crystalised Memories of a Warrior</Item>
+    <Item id="267726" minql="0" maxql="300" count="1">Common</Item> <!-- Doctor -->
+    <Item id="267728" minql="0" maxql="300" count="1"></Item>
+    <Item id="267698" minql="0" maxql="300" count="1"></Item>
+    <Item id="267701" minql="0" maxql="300" count="1"></Item>
+    <Item id="267747" minql="2" maxql="300" count="1"></Item>
+	
+  </Items>
+  <Combos>
+    <Combo id="267705" child1="267704" child2="267697"/> <!-- Combined Crystalised Combat Memories counts as one warrior and one sniper -->
+    <Combo id="267680" child1="267677" child2="267679"/>
+    <Combo id="267681" child1="267705" child2="267680"/>
+    <Combo id="267739" child1="267681" child2="267737"/>
+    <Combo id="267729" child1="267726" child2="267728"/>
+    <Combo id="267727" child1="267680" child2="267729"/>
+    <Combo id="267738" child1="267737" child2="267727"/>
+    <Combo id="267702" child1="267701" child2="267698"/>
+    <Combo id="267703" child1="267680" child2="267702"/>
+    <Combo id="267740" child1="267737" child2="267703"/>
+    <Combo id="267781" child1="267738" child2="267739"/>
+    <Combo id="267778" child1="267740" child2="267781"/>
+  </Combos>
+  <Copies>
+	<Copy id="267746" copy="267747"/> <!-- Item 267746 counts as an item 267747, Eg inactive bracer will count as an active one. -->
+  </Copies>
+	
+	
+</Recipe>
+

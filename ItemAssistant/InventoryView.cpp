@@ -17,6 +17,10 @@
 #include <csvexport/CSVDataModel.h>
 #include <csvexport/CSVExporter.h>
 #include <boost/filesystem.hpp>
+#include <Mmsystem.h>
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/trim.hpp>
+
 
 using namespace WTL;
 using namespace aoia;
@@ -25,6 +29,98 @@ using namespace Parsers;
 
 namespace bfs = boost::filesystem;
 
+struct LootInfo {
+	LootInfo(unsigned int* arr) { lowid = arr[1]; highid = arr[0]; ql = arr[2]; }
+	unsigned int lowid;
+	unsigned int highid;
+	unsigned int ql;
+};
+
+// [Server]Parses every highid/lowid/ql from a "open container" message
+// Container id returned by reference, 0 if a body
+std::vector<LootInfo> parseLootdata(Parser msg, unsigned int& containerID) {
+	int i = 0;
+	std::vector<LootInfo> output;
+
+	// Ignore 11 bytes
+	while (msg.remaining() && i < 11) {
+		i++;
+		msg.popChar();
+	}
+
+	int numItems = (msg.popChar() - 3)/4;
+	if (numItems) {
+		i = 0;
+		while (i < 17 && msg.remaining()) { msg.popChar(); i++; }
+	}
+
+	for (int item = 0; item < numItems; item++) {
+		i= 0;
+		unsigned int data[3];
+		while (i < 3 && msg.remaining()) data[i++] = msg.popInteger();
+		output.push_back( LootInfo(data) );
+
+		// Remove 20 byte padding behind
+		i = 0;
+		if (item != numItems-1)
+			while (i < 20 && msg.remaining()) { i++; msg.popChar(); }
+	}
+
+
+	containerID = 0;
+	while (msg.remaining()) {
+		if (msg.popChar() != 199) continue;
+		int x = msg.popChar();
+		if (x == 73) // Store id only if a backpack
+			containerID = msg.popInteger();
+		break;
+	}
+
+	return output;
+}
+
+struct SMSG_MOVED_DATA {
+	char unknown0;
+	enum TYPE {
+		START_FRONT = 1,		STOP_FRONT = 2, 
+		START_BACK = 3,			STOP_BACK = 4, 
+		START_SRIGHT = 5,		STOP_SRIGHT = 6, 
+		START_SLEFT = 7,		STOP_SLEFT = 8,
+		START_ROT_RIGHT = 10,	STOP_ROT_RIGHT = 11, 
+		START_ROT_LEFT = 13,	STOP_ROT_LEFT = 14, 
+		JUMP = 15, ROTATE_RELATED = 22};
+	TYPE state;
+	float x,z,y;
+
+	// Angles?
+	float unknown_d0;
+	float unknown_d1;
+	SMSG_MOVED_DATA(AOMessageBase msg) {
+		unknown0 = msg.popChar();
+		state = (TYPE)msg.popChar();
+		
+		// 4*4 bytes unknown ,first row
+		float* d;
+		int tmp[2] = {0};
+		tmp[0] = msg.popInteger(); // 0
+		tmp[1] = msg.popInteger(); // float/double? increments on look right, decrements on look left
+		d = (float*)&tmp[1]; unknown_d0 = *d;
+
+		tmp[0] = msg.popInteger(); // 0
+		tmp[1] = msg.popInteger(); // float/double? increments on look left, decrements on look right
+		d = (float*)&tmp[1]; unknown_d1 = *d;
+
+		// Grab coordinates
+		float* f;
+		int ix = msg.popInteger();
+		int iz = msg.popInteger();
+		int iy = msg.popInteger();
+		f = (float*)&ix; x = *f;
+		f = (float*)&iz; z = *f;
+		f = (float*)&iy; y = *f;
+	}
+	
+};
 
 InventoryView::InventoryView(sqlite::IDBPtr db, aoia::IContainerManagerPtr containerManager, aoia::IGuiServicesPtr gui, aoia::ISettingsPtr settings)
     : m_db(db)
@@ -36,6 +132,7 @@ InventoryView::InventoryView(sqlite::IDBPtr db, aoia::IContainerManagerPtr conta
     , m_datagrid(new DataGridControl())
     , m_characterParserDumper(_T("binfiles"))
     , m_infoview(db)
+	, m_lastUpdateCharpos(0)
     , m_findview(db, settings)
 {
     assert(db);
@@ -50,6 +147,11 @@ InventoryView::InventoryView(sqlite::IDBPtr db, aoia::IContainerManagerPtr conta
     {
         m_enableCharacterParserDumper = false;
     }
+
+	unsigned int zones_sl[] = {4336 , 4337 , 4374 , 4365 , 4366 , 4367 , 4370 , 4543 , 4676 , 4688 , 4686 , 4678 , 4684 , 4692 , 4694 , 4682 , 4696 , 4683 , 4680 , 4677 , 4697 , 4690 , 4329 , 4328 , 4331 , 4330 , 4006 , 4629 , 4320 , 4322 , 4321 , 4681 , 4540 , 4364 , 4368 , 4691 , 4541 , 4544 , 4698 , 4542 , 4679 , 4693 , 4695 , 4881 , 4005 , 4689 , 4687 , 4873 , 4872 , 4877 , 4685 , 4582 , 4605 , 690 , 4560 , 4531 , 4532 , 4530 , 4533 , 4001 , 4313 , 4310 , 4312 , 4311 , 4880 , 4699};
+	unsigned int zones_rk[] = {760 , 585 , 655 , 550 , 505 , 660 , 605 , 800 , 510 , 665 , 120 , 590 , 670 , 556 , 656 , 595 , 555 , 620 , 685 , 687 , 765 , 770 , 717 , 647 , 152 , 791 , 775 , 695 , 625 , 560 , 696 , 780 , 567 , 566 , 565 , 540 , 705 , 716 , 700 , 710 , 570 , 720 , 575 , 630 , 725 , 785 , 735 , 740 , 730 , 520 , 745 , 610 , 615 , 525 , 1933 , 635 , 790 , 535 , 515 , 795 , 750 , 755 , 580 , 640 , 646 , 650 , 600 , 551 , 586 , 545};
+	m_zones_sl.insert(zones_sl, zones_sl + (sizeof(zones_sl)/sizeof(unsigned int)));
+	m_zones_rk.insert(zones_rk, zones_rk + (sizeof(zones_rk)/sizeof(unsigned int)));
 }
 
 
@@ -133,6 +235,30 @@ LRESULT InventoryView::OnHelp(WORD/*wNotifyCode*/, WORD/*wID*/, HWND/*hWndCtl*/,
 }
 
 
+LRESULT InventoryView::onDoubleClick(LPNMHDR lParam) {
+	int x = 9;
+
+	NMITEMACTIVATE *pdi = (NMITEMACTIVATE*)lParam;
+	unsigned int containerid;
+	unsigned int charid;
+
+
+	ItemListDataModelPtr data_model = boost::static_pointer_cast<ItemListDataModel>(m_datagrid->getModel());
+	if (data_model->getItemContainerId(pdi->iItem, charid, containerid)) {
+
+		if (containerid >= 1024) {
+			std::tstringstream sql;
+			sql << _T("owner = ") << charid << _T(" AND parent ");
+			sql << _T(" = ") << containerid;
+			UpdateListView(sql.str());
+
+		
+			m_datagrid->setSelectedItems(containerid);
+		}
+	}
+
+	return 0;
+}
 LRESULT InventoryView::OnColumnClick(LPNMHDR lParam)
 {
     LPNMLISTVIEW pnmv = (LPNMLISTVIEW)lParam;
@@ -644,6 +770,10 @@ LRESULT InventoryView::OnPostCreate(UINT/*uMsg*/, WPARAM/*wParam*/, LPARAM/*lPar
 	}
 
 	m_treeview.SelectItem(item);
+
+	BOOL b = 1;
+	OnFindToggle(0, 0, 0, b);
+	m_toolbar.CheckButton(ID_INV_FIND_TOGGLE, TRUE);
     return 0;
 }
 
@@ -970,6 +1100,44 @@ unsigned int InventoryView::GetFromContainerId(unsigned int charId, unsigned sho
     }
 }
 
+void InventoryView::WriteWaypointsScript() {
+	if (timeGetTime() > m_lastUpdateCharpos + 3000) {
+		std::tstring path = AOManager::instance().getAOPrefsFolder() + _T("\\..\\scripts\\wp");
+
+
+
+		DWORD maxAllowedTime = timeGetTime() - (5*60*1000);
+		std::tstring script = _T("<a href=\"text://");
+		for (auto it : m_characterPositionMap) {
+			if (it.second.characterName.empty()) {
+				g_DBManager.Lock();
+				it.second.characterName = g_DBManager.GetToonName(it.first);
+				g_DBManager.UnLock();
+			}
+
+			if (it.second.lastSeen > maxAllowedTime) {
+				std::tstringstream st;
+				std::tstring zoneMap = _T("Unknown map");
+				if (m_zones_sl.find(it.second.zoneid) != m_zones_sl.cend())
+					zoneMap = _T("SL map");
+				else if (m_zones_rk.find(it.second.zoneid) != m_zones_rk.cend())
+					zoneMap = _T("RK map");
+
+				st << _T("<a href='chatcmd:///waypoint ") << (int)it.second.x << _T(" ") << (int)it.second.z << _T(" ") << it.second.zoneid << _T("'>") 
+					<< it.second.characterName << _T(": Upload waypoint to map</a> (") << zoneMap << _T(")<br>");
+				script += st.str();
+			}
+		}
+	
+		script += _T("---<br><a href='chatcmd:///waypoint . . .'>Remove uploaded waypoint</a>\">Click here for waypoint</a>");
+		m_lastUpdateCharpos = timeGetTime();
+
+		std::tofstream outfile(path);
+		outfile << script;
+		outfile.close();
+	}
+}
+
 
 void InventoryView::OnAOServerMessage(AOMessageBase& msg)
 {
@@ -977,6 +1145,30 @@ void InventoryView::OnAOServerMessage(AOMessageBase& msg)
     {
         m_characterParserDumper.OnAOServerMessage(msg);
     }
+
+	/*
+	{
+		AOMessageBase copy = msg;
+		std::vector<char> buf;
+		while (copy.remaining() > 0)
+			buf.push_back(copy.popChar());
+
+		char* name = "34-I Helper";
+		int strle = sizeof(name) - 2;
+		if (buf.size() >= strle) {
+			for (int i = 0; i < buf.size()-strle-1; i++) {
+				for (int j = 0; j < strle-1; j++) {
+					if (buf[i+j] != name[j])
+						break;
+					if (j >= strle-2) {
+						std::stringstream st;
+						st << "Voila: " << msg.messageId() << "\n";
+						OutputDebugStringA(st.str().c_str());
+					}
+				}
+			}
+		}
+	}*/
 
     switch (msg.messageId())
     {
@@ -2284,13 +2476,102 @@ void InventoryView::OnAOServerMessage(AOMessageBase& msg)
             Native::AOContainer bp((AO::Header*)msg.start());
             TRACE(bp.print());
 
-            unsigned int containerId = bp.containerid().High();
+			unsigned int containerId = bp.containerid().High();
+			unsigned int containerId2;
+			auto loot = parseLootdata(msg, containerId2);
 
             if (bp.tempContainerId() == 0x006e && bp.containerid().Low() == 0xc350)
             {
                 TRACE(_T("Overflow container msg"));
                 containerId = aoia::INV_OVERFLOW;
             }
+			else if (containerId2 == 0 && !loot.empty()) {
+				time_t rawtime;
+				struct tm * timeinfo;
+
+				time (&rawtime);
+				timeinfo = localtime (&rawtime);
+				char buffer [80];
+				sprintf_s(buffer, 80, "%s", asctime(timeinfo));
+
+				
+				std::tstringstream script;
+				std::tstring ts = from_ascii_copy(buffer);
+				boost::algorithm::trim(ts);
+				script << _T("<a href=\"text://Item drops for last corpse:<br>") << ts.c_str() << _T("<br>");
+
+				g_DBManager.Lock();
+				for (auto it : loot) {
+					std::tstring itemname;
+					{
+						std::tstringstream st;
+						st << _T("SELECT name FROM tblAo WHERE aoid in (") << it.highid << _T(",") << it.lowid << _T(")");
+						sqlite::ITablePtr itemnames = m_db->ExecTable(st.str());	
+						if (itemnames != NULL) {
+
+							std::string tmp = itemnames->Data(0, 0);
+							if (tmp.empty())
+								itemname = _T("Unknown item");
+							else 
+								itemname = from_ascii_copy(tmp);
+						}
+					}
+
+					script << _T("QL") << (it.ql < 10 ? _T("<font color=#000000>00</font>") : (it.ql < 100)?_T("<font color=#000000>0</font>"):_T(""))
+						<< it.ql 
+						<< _T(" ") 
+						<< _T("<a href='itemref://") 
+						<< it.lowid << _T("/") << it.highid << _T("/") << it.ql 
+						<< _T("'>") << itemname << _T("</a><br>");
+
+				}
+				g_DBManager.UnLock();
+				script << _T("<br>Generated by AOIA++\">Click to see drops</a>");
+				std::tstring path = AOManager::instance().getAOPrefsFolder() + _T("\\..\\scripts\\loot");
+				std::tofstream outfile(path);
+				outfile << script.str();
+				outfile.close();
+				int x = 9;
+			}
+			
+			else if (containerId2 != 0 && !loot.empty()) {
+				std::tstringstream script;
+				script << _T("<a href=\"text://Contents of backpack:<br>") << _T("<br>");
+				std::tstring containername = m_containerManager->GetContainerName(msg.characterId(), containerId);
+				g_DBManager.Lock();
+				for (auto it : loot) {
+					std::tstring itemname;
+					{
+						std::tstringstream st;
+						st << _T("SELECT name FROM tblAo WHERE aoid in (") << it.highid << _T(",") << it.lowid << _T(")");
+						sqlite::ITablePtr itemnames = m_db->ExecTable(st.str());	
+						if (itemnames != NULL) {
+
+							std::string tmp = itemnames->Data(0, 0);
+							if (tmp.empty())
+								itemname = _T("Unknown item");
+							else 
+								itemname = from_ascii_copy(tmp);
+						}
+					}
+
+					
+					script << _T("QL") << (it.ql < 10 ? _T("<font color=#000000>00</font>") : (it.ql < 100)?_T("<font color=#000000>0</font>"):_T(""))
+						<< it.ql 
+						<< _T(" ") 
+						<< _T("<a href='itemref://") 
+						<< it.lowid << _T("/") << it.highid << _T("/") << it.ql 
+						<< _T("'>") << itemname << _T("</a><br>");
+
+				}
+				g_DBManager.UnLock();
+				script << _T("<br>Generated by AOIA++\">") << containername << _T("</a>");
+				std::tstring path = AOManager::instance().getAOPrefsFolder() + _T("\\..\\scripts\\bp");
+				std::tofstream outfile(path);
+				outfile << script.str();
+				outfile.close();
+				int x = 9;
+			}
 
             //bp.containerid().Low() = C76A  => This is some loot container.
             //bp.containerid().Low() = C749  => I think it means it is in my inv.
@@ -2436,6 +2717,27 @@ void InventoryView::OnAOServerMessage(AOMessageBase& msg)
             }
         }
         break;
+
+	case AO::SMSG_UNKNOWN_WITH_ZONEID2:
+		{
+			msg.skip(13);
+			int zoneid = msg.popInteger();
+			m_characterPositionMap[msg.characterId()].zoneid = zoneid;
+			m_characterPositionMap[msg.characterId()].lastSeen = timeGetTime();
+			WriteWaypointsScript();
+		}
+		break ;
+
+
+	case AO::SMSG_MOVED:
+		{
+			SMSG_MOVED_DATA md(msg);
+			m_characterPositionMap[msg.characterId()].x = md.x;
+			m_characterPositionMap[msg.characterId()].z = md.y;
+			m_characterPositionMap[msg.characterId()].lastSeen = timeGetTime();
+			WriteWaypointsScript();
+		}
+		break;
 
     case AO::MSG_SHOP_ITEMS:
         {

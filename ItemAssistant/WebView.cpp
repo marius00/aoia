@@ -9,6 +9,7 @@ namespace aoia {
         if (m_initialURL.empty()) {
             m_initialURL = _T("about:blank");
         }
+
     }
 
 

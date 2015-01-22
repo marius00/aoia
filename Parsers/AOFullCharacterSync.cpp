@@ -86,20 +86,21 @@ namespace Parsers {
         // unknown int
         skip(sizeof(unsigned int));
 
-        // Unknown (but empty) collection
+        // Unknown (but previously empty) collection
         count = pop3F1Count();
-        assert(count == 0);
+        //assert(count == 0);
 
-        // Unknown (but empty) collection
+        // Unknown (but previously empty) collection
         count = pop3F1Count();
-        assert(count == 0);
+        //assert(count == 0);
 
         // Unknown collection of 16 byte structs.
         // Probably perk information of some sort?
         count = pop3F1Count();
         skip(count * 16);
 
-        assert(pos() == end());
+		// Assertion no longer valid
+        //assert(pos() == end());
     }
 
 

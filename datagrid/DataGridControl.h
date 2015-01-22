@@ -47,10 +47,11 @@ namespace aoia
         unsigned int getSelectedCount() const;
         std::set<unsigned int> getSelectedItems() const;
         void ClearSelection();
-
+		void setSelectedItems(unsigned int containerId);
     protected:
-        LRESULT onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT onGetDispInfo(int wParam, LPNMHDR lParam, BOOL& bHandled);
+		LRESULT onCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+		LRESULT onGetDispInfo(int wParam, LPNMHDR lParam, BOOL& bHandled);
+		
         //LRESULT onCacheHint(int wParam, LPNMHDR lParam, BOOL &bHandled);
         //LRESULT onFindItem(int wParam, LPNMHDR lParam, BOOL &bHandled);
 

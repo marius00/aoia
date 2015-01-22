@@ -18,7 +18,8 @@ PatternMatchView::PatternMatchView(sqlite::IDBPtr db, aoia::IContainerManagerPtr
     , m_toonid(0)
     , m_sortDesc(true)
     , m_sortColumn(1)
-    , m_webview(STREAM2STR("http://ia-help.frellu.net/?topic=patternmatcher"))
+	, m_pbmode(PatternMatcher::FilterPanel::PbMode::REGULAR)
+    , m_webview( _T("") /*STREAM2STR("http://ia-help.frellu.net/?topic=patternmatcher") */)
     , m_filterPanel(db, settings)
 {
     m_availCalc.SetOwner(this);
@@ -41,6 +42,7 @@ LRESULT PatternMatchView::OnCreate(LPCREATESTRUCT createStruct)
 
     m_webview.Create(m_hWnd);
     m_webview.ShowWindow(SW_SHOWNOACTIVATE);
+	m_webview.SetHTML(_T("<html><body><a href=\"http://ia-help.frellu.net/?topic=patternmatcher\">Need help?</a></body></html>"));
 
     m_accelerators.LoadAccelerators(IDR_PB_ACCEL);
 
@@ -138,9 +140,7 @@ void PatternMatchView::onFilterSettingsChanged()
     unsigned int charid = m_filterPanel.getCharId();
     bool excludeAssembled = m_filterPanel.getExcludeAssembled();
 
-    if (charid != m_availCalc.Toon() ||
-        excludeAssembled != m_availCalc.ExcludeAssembled())
-    {
+    if (charid != m_availCalc.Toon() || excludeAssembled != m_availCalc.ExcludeAssembled()) {
         SetBossAvail(0, -1.0f);
 
         // Stop workerthread
@@ -162,6 +162,7 @@ void PatternMatchView::onFilterSettingsChanged()
 
     m_toonid = charid;
     m_availfilter = m_filterPanel.getAvailFilter();
+	m_pbmode = m_filterPanel.getMode();
 
     UpdatePbListView();
 }
@@ -170,75 +171,132 @@ void PatternMatchView::onFilterSettingsChanged()
 /**
 * Updates the specified pocketboss entry. If pbid is zero, update all entries.
 */
-void PatternMatchView::UpdatePbListView(unsigned int pbid)
-{
-    if (pbid == 0)
-    {
-        m_listview.DeleteAllItems();
+void PatternMatchView::UpdatePbListView(unsigned int pbid) {
+	if (m_pbmode == PatternMatcher::FilterPanel::PbMode::REGULAR) {
 
-        std::vector<std::tstring> cols;
-        cols.push_back(_T("Pocket Boss"));
-        cols.push_back(_T("Availability"));
-        SetColumns(cols);
 
-        for (PbList::iterator it = m_pblist.begin(); it != m_pblist.end(); ++it)
-        {
-            float avail = (*it)->pbavailability;
-            if (avail >= m_availfilter)
-            {
-                cols.clear();
-                cols.push_back((*it)->pbname);
-                if ((*it)->pbavailability < 0.0f)
-                {
-                    cols.push_back(_T("calculating..."));
-                }
-                else
-                {
-                    cols.push_back(STREAM2STR(avail));
-                }
-                AddRow((*it)->pbid, cols);
-            }
-        }
-    }
-    else
-    {
-        for (PbList::iterator it = m_pblist.begin(); it != m_pblist.end(); ++it)
-        {
-            if (pbid == (*it)->pbid)
-            {
-                float avail = (*it)->pbavailability;
-                if (avail >= m_availfilter)
-                {
-                    std::vector<std::tstring> cols;
-                    cols.push_back((*it)->pbname);
-                    float avail = (*it)->pbavailability;
-                    if (avail < 0.0f)
-                    {
-                        cols.push_back(_T("calculating..."));
-                    }
-                    else
-                    {
-                        cols.push_back(STREAM2STR(avail));
-                    }
-                    UpdateRow((*it)->pbid, cols);
-                }
-                else
-                {
-                    LVFINDINFO findInfo;
-                    findInfo.flags = LVFI_PARAM;
-                    findInfo.lParam = pbid;
+		if (pbid == 0) {
+			m_listview.DeleteAllItems();
 
-                    int indx = m_listview.FindItem(&findInfo, -1);
+			std::vector<std::tstring> cols;
+			cols.push_back(_T("Pocket Boss"));
+			cols.push_back(_T("Availability"));
+			SetColumns(cols);
 
-                    if (indx > -1)
-                    {
-                        m_listview.DeleteItem(indx);
-                    }
-                }
-                break;
-            }
-        }
-    }
+
+			for (PbList::iterator it = m_pblist.begin(); it != m_pblist.end(); ++it) {
+				float avail = (*it)->pbavailability;
+				if (avail >= m_availfilter) {
+					cols.clear();
+					cols.push_back((*it)->pbname);
+					if ((*it)->pbavailability < 0.0f) {
+						cols.push_back(_T("calculating..."));
+					}
+					else {
+						cols.push_back(STREAM2STR(avail));
+					}
+					AddRow((*it)->pbid, cols);
+				}
+			}
+		}
+		else
+		{
+			for (PbList::iterator it = m_pblist.begin(); it != m_pblist.end(); ++it)
+			{
+				if (pbid == (*it)->pbid)
+				{
+					float avail = (*it)->pbavailability;
+					if (avail >= m_availfilter)
+					{
+						std::vector<std::tstring> cols;
+						cols.push_back((*it)->pbname);
+						float avail = (*it)->pbavailability;
+						if (avail < 0.0f)
+						{
+							cols.push_back(_T("calculating..."));
+						}
+						else
+						{
+							cols.push_back(STREAM2STR(avail));
+						}
+						UpdateRow((*it)->pbid, cols);
+					}
+					else
+					{
+						LVFINDINFO findInfo;
+						findInfo.flags = LVFI_PARAM;
+						findInfo.lParam = pbid;
+
+						int indx = m_listview.FindItem(&findInfo, -1);
+
+						if (indx > -1)
+						{
+							m_listview.DeleteItem(indx);
+						}
+					}
+					break;
+				}
+			}
+		}
+	}
+	else {
+		std::set<unsigned int> valid;
+		bool clan = PatternMatcher::FilterPanel::PbMode::INF_CLAN == m_pbmode;
+		if (clan) {
+			unsigned int ids[] = {234280,234170,234125,234197,234224,234152,234251,239489,234327};		
+			valid.insert(ids, ids + sizeof(ids)/sizeof(unsigned int));
+		}
+		else {
+			unsigned int ids[] = {234386,234280,234170,234179,239678,234188,234271,234318,234309};		
+			valid.insert(ids, ids + sizeof(ids)/sizeof(unsigned int));
+		}
+
+		m_listview.DeleteAllItems();
+
+		std::vector<std::tstring> cols;
+		cols.push_back(_T("Pocket Boss"));
+		cols.push_back(_T("Availability"));
+		SetColumns(cols);
+
+
+		for (PbList::iterator it = m_pblist.begin(); it != m_pblist.end(); ++it) {
+			if (valid.find( (*it)->pbid) != valid.cend()) {
+				float avail = (*it)->pbavailability;			
+				cols.clear();
+				cols.push_back((*it)->pbname);
+				if ((*it)->pbavailability < 0.0f) {
+					cols.push_back(_T("calculating..."));
+				}
+				else {
+					cols.push_back(STREAM2STR(avail));
+				}
+				AddRow((*it)->pbid, cols);
+			}
+		}
+	/*
+		clam:
+		234280: The Indomitable Chimera
+		234170: Ahpta
+		234125: Relief Teals
+		234197: Taille Frees
+		234224: Lya
+		234152: Fester Leila
+		234251: Pazuzu
+		239489: Nyame
+		234327: Arch Bigot Aliel
+
+
+		234386: Odqan
+		234280: The Indomitable Chimera
+		234170: Ahpta
+		234179: Ushqa
+		239678: Ho
+		234188: Haqa
+		234271: Arch Bigot Biap
+		234318: Asase Ya
+		234309: Arch Bigot Lohelf
+		*/
+	}
     m_listview.SortItemsEx(CompareStr, (LPARAM)this);
 }
 

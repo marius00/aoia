@@ -106,6 +106,24 @@ LRESULT MFTreeView::OnGetDispInfo(int, LPNMHDR lParam, BOOL&)
 }
 
 
+LRESULT MFTreeView::OnKeydown(int idCtrl, LPNMHDR pnmh, BOOL& bHandled) {
+	int x = 9;
+	TV_KEYDOWN* pTVKeyDown = (TV_KEYDOWN*)pnmh;
+
+	if (pTVKeyDown->wVKey == VK_F2) {
+
+		WTL::CTreeItem item = GetDropHilightItem();
+		if (item.IsNull()) {
+			item = GetSelectedItem();
+		}
+		MFTreeViewItem* pItem = (MFTreeViewItem*)item.GetData();
+		if (pItem == NULL) 
+			return 0;
+
+		pItem->HandleMenuCmd(4 /*CMD_RENAME*/, item);		
+	}
+	return 0;
+}
 LRESULT MFTreeView::OnRClick(int /*idCtrl*/, LPNMHDR pnmh, BOOL& bHandled)
 {
    HMENU ctxMenu = CreatePopupMenu();

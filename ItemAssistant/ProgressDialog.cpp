@@ -59,7 +59,7 @@ void CProgressDialog::setTaskProgress(unsigned int completed, unsigned int max)
 
     CProgressBarCtrl progressCtrl = GetDlgItem(IDC_PROGRESS1);
     progressCtrl.SetRange(0, 10000);
-    progressCtrl.SetPos(completed * 10000 / m_taskMax);
+    progressCtrl.SetPos(completed * 10000 / max(1, m_taskMax));
     //m_lock.MutexOff();
 }
 
@@ -73,7 +73,7 @@ void CProgressDialog::setOverallProgress(unsigned int completed, unsigned int ma
 
     CProgressBarCtrl progressCtrl = GetDlgItem(IDC_PROGRESS2);
     progressCtrl.SetRange(0, 10000);
-    progressCtrl.SetPos(completed * 10000 / m_taskMax);
+    progressCtrl.SetPos(completed * 10000 / max(1, m_taskMax));
     //m_lock.MutexOff();
 }
 

@@ -62,7 +62,7 @@ std::tstring AOManager::getAOFolder() const
 
             if (!bfs::exists(AODir / _T("anarchyonline.exe"))) {
                 MessageBox( NULL, _T("The specified directory doesn't contain a valid Anarchy Online installation."),
-                    _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
+                    _T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
                 return _T("");
             }
 
@@ -137,7 +137,7 @@ std::tstring AOManager::getAOPrefsFolderManual() const
 
     if (!bfs::exists(prefsDir / _T("Prefs.xml"))) {
         MessageBox( NULL, _T("The specified directory doesn't seem to contain valid Anarchy Online prefs."),
-            _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
+            _T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
         return _T("");
     }
     // Store the new AO Prefs directory in the settings
@@ -225,7 +225,45 @@ void AOManager::setMinToTaskbar(bool bMinToTaskbar)
 	m_settings->setValue(_T("Minimise To Taskbar"), m_minToTaskbar);
 }
 
+std::tstring AOManager::getAccountName(unsigned int charid) const {
+	std::tstring charidStr;
+	{
+		std::tstringstream tmp;
+		tmp << _T("Char") << charid;
+		charidStr = tmp.str();
+	}
+	
 
+	std::vector<std::tstring> accountNames = AOManager::getAccountNames() ;
+
+	for (auto accountName : accountNames) {
+		std::tstring path = AOManager::instance().getAOPrefsFolder() + _T("\\") + accountName + _T("\\*");
+
+
+		WIN32_FIND_DATA findData;
+		HANDLE hFind = FindFirstFileEx(path.c_str(), FindExInfoStandard, &findData, FindExSearchLimitToDirectories, NULL, 0);
+		if (hFind != INVALID_HANDLE_VALUE) {
+			do {
+				if ((findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) 
+					&& (findData.cFileName[0] != NULL) 
+					&& (findData.cFileName[0] != '.')
+					&& (std::tstring(findData.cFileName).find(charidStr) != std::tstring::npos)
+					)
+				{		
+					FindClose(hFind);
+					hFind = NULL;
+					return accountName;
+				}
+			}
+			while (FindNextFile(hFind, &findData));
+			if (hFind)
+				FindClose(hFind);
+		}
+	}
+
+
+	return _T("");
+}
 std::vector<std::tstring> AOManager::getAccountNames() const
 {
     std::vector<std::tstring> result;

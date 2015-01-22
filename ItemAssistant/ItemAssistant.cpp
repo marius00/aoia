@@ -16,54 +16,65 @@ CAppModule _Module;
 DBManager g_DBManager;
 MiniDumper _crashdumper(_T("AOIA"));
 
-
+void getmapfile(char *prog);
+void trans_func(unsigned int u, EXCEPTION_POINTERS *ExInfo);
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                        HINSTANCE hPrevInstance,
                        LPTSTR    lpCmdLine,
                        int       nCmdShow)
 {
-    HRESULT hRes = ::CoInitialize(NULL);
-    // If you are running on NT 4.0 or higher you can use the following call instead to 
-    // make the EXE free threaded. This means that calls come in on a random RPC thread.
-    // HRESULT hRes = ::CoInitializeEx(NULL, COINIT_MULTITHREADED);
-    ATLASSERT(SUCCEEDED(hRes));
+	char* av = "ItemAssistant.exe" ;
+	getmapfile(av);
+	_set_se_translator( trans_func );
+		try{
 
-    // this resolves ATL window thunking problem when Microsoft Layer for Unicode (MSLU) is used
-    ::DefWindowProc(NULL, 0, 0, 0L);
+		HRESULT hRes = ::CoInitialize(NULL);
+		// If you are running on NT 4.0 or higher you can use the following call instead to 
+		// make the EXE free threaded. This means that calls come in on a random RPC thread.
+		// HRESULT hRes = ::CoInitializeEx(NULL, COINIT_MULTITHREADED);
+		ATLASSERT(SUCCEEDED(hRes));
 
-    AtlInitCommonControls(ICC_COOL_CLASSES | ICC_BAR_CLASSES);	// add flags to support other controls
+		// this resolves ATL window thunking problem when Microsoft Layer for Unicode (MSLU) is used
+		::DefWindowProc(NULL, 0, 0, 0L);
 
-    hRes = _Module.Init(NULL, hInstance, &LIBID_ATLLib);
-    ATLASSERT(SUCCEEDED(hRes));
+		AtlInitCommonControls(ICC_COOL_CLASSES | ICC_BAR_CLASSES);	// add flags to support other controls
 
-    AtlAxWinInit();
+		hRes = _Module.Init(NULL, hInstance, &LIBID_ATLLib);
+		ATLASSERT(SUCCEEDED(hRes));
 
-    int nRet = 0;
+		AtlAxWinInit();
 
-    try
-    {
-        if (!App::Instance()->init( lpCmdLine )) {
-            MessageBox( NULL, _T("Unable to start the application from the current location!"), 
-                _T("Error - AO Item Assistant +"), MB_OK | MB_ICONERROR);
-            return 0;
-        }
+		int nRet = 0;
 
-        nRet = App::Instance()->run(lpCmdLine, nCmdShow);
+		try
+		{
+			if (!App::Instance()->init( lpCmdLine )) {
+				MessageBox( NULL, _T("Unable to start the application from the current location!"), 
+					_T("Error - AO Item Assistant++"), MB_OK | MB_ICONERROR);
+				return 0;
+			}
 
-        App::Instance()->destroy();
-    }
-    catch (std::exception& e)
-    {
-        Logger::instance().log(_T("Unhandled exception caught:"));
-        Logger::instance().log(from_ascii_copy(e.what()));
-    }
-    catch (...)
-    {
-        Logger::instance().log(_T("Unhandled exception caught."));
-    }
+			nRet = App::Instance()->run(lpCmdLine, nCmdShow);
 
-    _Module.Term();
-    ::CoUninitialize();
+			App::Instance()->destroy();
+		}
+		catch (std::exception& e)
+		{
+			Logger::instance().log(_T("Unhandled exception caught:"));
+			Logger::instance().log(from_ascii_copy(e.what()));
+		}
+		catch (...)
+		{
+			Logger::instance().log(_T("Unhandled exception caught."));
+		}
 
-    return nRet;
+		_Module.Term();
+		::CoUninitialize();
+
+		return nRet;
+
+		}catch(unsigned int u){
+			printf("in catch, 0x%x was caught\n", u);
+			return 0;
+		}
 }

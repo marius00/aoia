@@ -85,6 +85,7 @@ protected:
 
 private:
     PbList m_pblist;
+	PatternMatcher::FilterPanel::PbMode m_pbmode;
 
     float m_availfilter;
     unsigned int m_toonid;

@@ -12,6 +12,7 @@ TabFrame::TabFrame(sqlite::IDBPtr db, aoia::IContainerManagerPtr containerManage
   , m_summaryView(db, gui)
 //  , m_playershopView(gui)
   , m_patternView(db, containerManager, gui, settings)
+  , m_recipesView(db, containerManager, gui, settings)
   , m_identifyView(db, containerManager, gui)
 {
     //SetForwardNotifications(true);
@@ -96,17 +97,21 @@ LRESULT TabFrame::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandl
 
     m_patternView.Create(*this, defRect, 0, style);
     AddTab(m_patternView, _T("Pattern Matcher"));
-    m_viewPlugins.push_back(&m_patternView);
+	m_viewPlugins.push_back(&m_patternView);
+
+	m_recipesView.Create(*this, defRect, 0, style);
+	AddTab(m_recipesView, _T("Recipes"));
+	m_viewPlugins.push_back(&m_recipesView);
 /*
     m_playershopView.Create(*this, defRect, 0, style);
     AddTab(m_playershopView, _T("Playershop Monitor"));
     m_viewPlugins.push_back(&m_playershopView);
 
     m_playershopView.StartMonitoring();
-*/
-    m_identifyView.Create(*this, defRect, 0, style);
-    AddTab(m_identifyView, _T("Identify"));
-    m_viewPlugins.push_back(&m_identifyView);
+	*/
+	m_identifyView.Create(*this, defRect, 0, style);
+	AddTab(m_identifyView, _T("Identify"));
+	m_viewPlugins.push_back(&m_identifyView);
 
 #ifdef _DEBUG
     m_msgView.Create(*this, defRect, 0, style);

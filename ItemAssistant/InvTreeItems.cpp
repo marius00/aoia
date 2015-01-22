@@ -2,7 +2,10 @@
 #include "InvTreeItems.h"
 #include "InventoryView.h"
 #include "Shared\TextFormat.h"
+#include "RenameBackpackDlg.h"
 #include <ItemAssistantCore/AOManager.h>
+#include <boost/spirit.hpp>
+#include <boost/spirit/include/classic_tree_to_xml.hpp>
 
 
 SqlTreeViewItemBase::SqlTreeViewItemBase(InventoryView* pOwner)
@@ -114,6 +117,7 @@ std::tstring ContainerTreeViewItem::GetLabel() const
 
 bool ContainerTreeViewItem::HasChildren() const
 {
+	
     bool result = false;
 
     if (m_containerid == 1 || m_containerid == 2)
@@ -178,19 +182,158 @@ unsigned int ContainerTreeViewItem::AppendMenuCmd(HMENU hMenu, unsigned int firs
 {
     if (m_containerid != 0)
     {
-        m_commands[firstID] = SqlTreeViewItemBase::CMD_DELETE;
-        AppendMenu(hMenu, MF_STRING, firstID++, _T("Delete Items From DB"));
+		m_commands[firstID] = SqlTreeViewItemBase::CMD_DELETE;
+		AppendMenu(hMenu, MF_STRING, firstID++, _T("Delete Items From DB"));
+
+		// Can't rename inventory / bank /etc
+		if (m_containerid >= 1024) {
+			m_commands[firstID] = SqlTreeViewItemBase::CMD_RENAME;
+			AppendMenu(hMenu, MF_STRING, firstID++, _T("Rename backpack"));
+		}
     }
     return firstID;
 }
+inline bool exists_test(const std::tstring& name) {
+	if (FILE *file = _wfopen(name.c_str(), _T("r"))) {
+		fclose(file);
+		return true;
+	} else {
+		return false;
+	}   
+}
+
+void ContainerTreeViewItem::HandleMenuCmdRename(WTL::CTreeItem item) {
+	if (m_containerid < 1024)
+		return; // Bank, inventory, etc..
 
 
-bool ContainerTreeViewItem::HandleMenuCmd(unsigned int commandID, WTL::CTreeItem item)
-{
+	std::tstring prefs = AOManager::instance().getAOPrefsFolder();
+	std::tstring accname = AOManager::instance().getAccountName(m_charid);
+	if (accname.length() > 0) {
+
+		std::tstringstream path;
+		path << prefs << _T("\\") << accname << _T("\\Char") 
+			<<m_charid << _T("\\Containers\\Container_51017x") << m_containerid << _T(".xml");
+
+
+		std::tstring strpath = path.str();
+		if (exists_test(strpath)) {
+
+
+
+			RenameBackpackDlg dlg;
+			dlg.setCurrentName(m_containerManager->GetContainerName(m_charid, m_containerid));
+			dlg.DoModal();
+
+			std::tstring bagname = dlg.getBackpackName();
+
+			if (dlg.getSuccess()) {
+				// Rename to new name
+				if (bagname.length() > 0) {
+					std::ifstream t(strpath);
+					std::tstring data;
+
+					t.seekg(0, std::ios::end);   
+					data.reserve(t.tellg());
+					t.seekg(0, std::ios::beg);
+
+					data.assign((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+
+
+					std::tstring startStr = _T("name=\"container_name\" value='");
+					int startPos = data.find(startStr.c_str());
+					int endPos = data.find(_T("'"), startStr.length() + startPos);
+					std::replace( bagname.begin(), bagname.end(), '\'', '_');
+					std::tstring bagnameEscaped = _T("&quot;") + boost::spirit::xml::encode(bagname) + _T("&quot;");
+
+					std::tofstream outfile(strpath);
+					if (startPos == std::tstring::npos) {
+						startStr = _T("<Archive code=\"0\">");
+						startPos = data.find(startStr.c_str());
+
+						outfile << data.substr(0, startPos + startStr.length()).c_str();
+						outfile << _T("\n    <String name=\"container_name\" value='");
+						outfile << bagnameEscaped.c_str();
+						outfile << _T("' />");
+						outfile << data.substr(startPos + startStr.length()).c_str();
+					}
+					else {
+						outfile << data.substr(0, startPos + startStr.length()).c_str();
+						outfile << bagnameEscaped.c_str();
+						outfile << data.substr(endPos).c_str();
+					}
+					outfile.close();
+
+					WTL::CTreeItem parent = item.GetParent();
+					parent.Expand(TVE_COLLAPSE | TVE_COLLAPSERESET);
+					parent.Expand();
+					
+				}
+
+				// Default name
+				else {
+					std::ifstream t(strpath);
+					std::tstring data;
+
+					t.seekg(0, std::ios::end);   
+					data.reserve(t.tellg());
+					t.seekg(0, std::ios::beg);
+					data.assign((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+
+					std::tstring startStr = _T("<String name=\"container_name");
+					int startPos = data.find(startStr.c_str());
+					int endPos = data.find(_T(">"), startStr.length() + startPos);
+
+
+					std::tofstream outfile(strpath);
+					if (startPos != std::tstring::npos) {
+						outfile << data.substr(0, startPos).c_str();
+						outfile << data.substr(endPos + 1).c_str();
+					}
+					outfile.close();
+
+					WTL::CTreeItem parent = item.GetParent();
+					parent.Expand(TVE_COLLAPSE | TVE_COLLAPSERESET);
+					parent.Expand();
+				}
+			}
+		}
+		else {
+			RenameBackpackDlg dlg;
+			dlg.setCurrentName(m_containerManager->GetContainerName(m_charid, m_containerid));
+			dlg.DoModal();
+
+			if (dlg.getSuccess()) {
+				std::tstring bagname = dlg.getBackpackName();
+
+				// Rename to new name
+				if (bagname.length() > 0) {
+					std::replace( bagname.begin(), bagname.end(), '\'', '_');
+					std::tstring bagnameEscaped = _T("&quot;") + boost::spirit::xml::encode(bagname) + _T("&quot;");
+					std::tofstream outfile(strpath);
+					outfile << _T("<Archive code=\"0\">\n<String name=\"container_name\" value='");
+					outfile << bagnameEscaped.c_str();
+					outfile << _T("' />\n</Archive>");
+					outfile.close();
+
+
+					WTL::CTreeItem parent = item.GetParent();
+					parent.Expand(TVE_COLLAPSE | TVE_COLLAPSERESET);
+					parent.Expand();
+				}
+			}
+		}
+	}
+}
+bool ContainerTreeViewItem::HandleMenuCmd(unsigned int commandID, WTL::CTreeItem item) {
     if (m_commands.find(commandID) != m_commands.end())
     {
         switch (m_commands[commandID])
         {
+		case SqlTreeViewItemBase::CMD_RENAME:
+			HandleMenuCmdRename(item);
+			break;
+
         case SqlTreeViewItemBase::CMD_DELETE:
             {
                 g_DBManager.Lock();
@@ -213,8 +356,13 @@ bool ContainerTreeViewItem::HandleMenuCmd(unsigned int commandID, WTL::CTreeItem
             break;
         }
     }
-    else
-    {
+    else {
+		// Input: F2
+		if (commandID == 4) {
+			HandleMenuCmdRename(item);
+			return true;
+		}
+
         return false;
     }
     return true;
@@ -291,7 +439,7 @@ std::tstring CharacterTreeViewItem::GetLabel() const
 	    g_DBManager.Lock();
 		sqlite::ITablePtr pCreds = m_db->ExecTable(STREAM2STR("SELECT statvalue FROM tToonStats WHERE charid = " << (unsigned int)m_charid << " AND statid = 61"));
 	    g_DBManager.UnLock();
-		long lCreds = boost::lexical_cast<long>(pCreds->Data(0,0));
+		__int64 lCreds = boost::lexical_cast<__int64>(pCreds->Data(0,0));
 		if (lCreds < 1) lCreds = 0;
 		TextFormat fT(3, ",");
 		tCredsFmt = _T(" :: ") + fT.FormatLongToString(lCreds) + _T("cr");
@@ -437,7 +585,7 @@ std::tstring AccountTreeViewItem::GetLabel() const
 {
 	boost::filesystem::path acc(AOManager::instance().getAOPrefsFolder(), boost::filesystem::native);
 	acc /= m_label;
-	long lCreds = -1;
+	unsigned __int64 lCreds = 0;
 	boost::filesystem::directory_iterator character(acc), filesEnd;
 	for (; character != filesEnd; ++character)
 	{
@@ -463,10 +611,7 @@ std::tstring AccountTreeViewItem::GetLabel() const
 				if (!pToon->Data(0,0).empty())
 				{
 					sqlite::ITablePtr pCreds = m_db->ExecTable(STREAM2STR("SELECT statvalue FROM tToonStats WHERE charid = " << (unsigned int)charID << " AND statid = 61"));
-					if (lCreds > -1)
-						lCreds += boost::lexical_cast<long>(pCreds->Data(0,0));
-					else
-						lCreds = boost::lexical_cast<long>(pCreds->Data(0,0));
+					lCreds += boost::lexical_cast<unsigned __int64>(pCreds->Data(0,0));
 				}
 				g_DBManager.UnLock();
 		    }  
@@ -479,9 +624,8 @@ std::tstring AccountTreeViewItem::GetLabel() const
 	std::tstring tCredsFmt(_T(""));
 	if (AOManager::instance().getShowCreds())
 	{
-		if (lCreds < 1) lCreds = 0;
 		TextFormat fT(3, ",");
-		tCredsFmt = _T(" :: ") + fT.FormatLongToString(lCreds) + _T("cr");
+		tCredsFmt = _T(" :: ") + fT.FormatLongLongToString(lCreds) + _T("cr");
 	}
 	return _T("Account :: ") + m_label + tCredsFmt;
 }
@@ -581,7 +725,7 @@ std::tstring AccountRootTreeViewItem::GetLabel() const
 {
 	unsigned int iAccounts(0);
 	std::tstring tRet(_T(":: "));
-	long lCreds(0);
+	unsigned __int64 lCreds(0);
     std::tstring filename;
     filename = STREAM2STR( AOManager::instance().getAOPrefsFolder());
     if(!filename.empty())
@@ -599,7 +743,7 @@ std::tstring AccountRootTreeViewItem::GetLabel() const
 					if (acc.leaf().native() != _T("Browser"))
 					{
 						// we found an account ? .. but does it have any logged toons from our DB?
-						long lHasCreds = AccountRootTreeViewItem::DoesAccountHaveToons(acc);
+						unsigned __int64 lHasCreds = AccountRootTreeViewItem::DoesAccountHaveToons(acc);
 						if (lHasCreds != -1)
 						{
 							lCreds += lHasCreds;
@@ -628,9 +772,8 @@ std::tstring AccountRootTreeViewItem::GetLabel() const
 	std::tstring tCredsFmt(_T(""));
 	if (AOManager::instance().getShowCreds())
 	{
-		if (lCreds < 1) lCreds = 0;
 		TextFormat fT(3, ",");
-		tCredsFmt = _T(" ") + fT.FormatLongToString(lCreds) + _T("cr ::");
+		tCredsFmt = _T(" ") + fT.FormatLongLongToString(lCreds) + _T("cr ::");
 	}
 	std::tstring tCount = boost::lexical_cast<std::tstring>(pTC->Data(0,0).c_str());
 	return tRet + tCount + tWord + tCredsFmt;
@@ -669,8 +812,8 @@ std::vector<MFTreeViewItem*> AccountRootTreeViewItem::GetChildren() const
 			if (acc.leaf().native() != _T("Browser"))
 			{
 				// we found an account ? .. but does it have any logged toons from our DB?
-				long lCreds = AccountRootTreeViewItem::DoesAccountHaveToons(acc);
-				if (lCreds != -1)
+				unsigned __int64 lCreds = AccountRootTreeViewItem::DoesAccountHaveToons(acc);
+				if (lCreds != 0)
 				{
 					result.push_back(new AccountTreeViewItem(m_db, m_containerManager, m_pOwner, acc.leaf().native()));
 				}
@@ -694,9 +837,9 @@ bool AccountRootTreeViewItem::HandleMenuCmd(unsigned int commandID, WTL::CTreeIt
 }
 
 
-long AccountRootTreeViewItem::DoesAccountHaveToons(boost::filesystem::path acc) const
+unsigned __int64 AccountRootTreeViewItem::DoesAccountHaveToons(boost::filesystem::path acc) const
 {
-	long lCreds = -1;
+	unsigned __int64 lCreds = 0;
 	boost::filesystem::directory_iterator character(acc), filesEnd;
 	for (; character != filesEnd; ++character)
 	{
@@ -723,10 +866,7 @@ long AccountRootTreeViewItem::DoesAccountHaveToons(boost::filesystem::path acc) 
 				if (!pToon->Data(0,0).empty())
 				{
 					sqlite::ITablePtr pCreds = m_db->ExecTable(STREAM2STR("SELECT statvalue FROM tToonStats WHERE charid = " << (unsigned int)charID << " AND statid = 61"));
-					if (lCreds > -1)
-						lCreds += boost::lexical_cast<long>(pCreds->Data(0,0));
-					else
-						lCreds = boost::lexical_cast<long>(pCreds->Data(0,0));
+					lCreds += boost::lexical_cast<unsigned __int64>(pCreds->Data(0,0));
 				}
 		    }  
 		}

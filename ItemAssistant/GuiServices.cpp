@@ -14,7 +14,7 @@ namespace aoia
 
     void GuiServices::ShowTrayIconBalloon(std::tstring const& message) const
     {
-        m_trayIcon->SetBalloonDetails(message.c_str(), _T("AO Item Assistant +"), CTrayNotifyIcon::Info, 5000);
+        m_trayIcon->SetBalloonDetails(message.c_str(), _T("AO Item Assistant++"), CTrayNotifyIcon::Info, 5000);
     }
 
 

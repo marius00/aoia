@@ -32,6 +32,7 @@ public:
 	bool getMinToTaskbar() const;
 	void AOManager::setMinToTaskbar(bool);
     std::vector<std::tstring> getAccountNames() const;
+	std::tstring getAccountName(unsigned int charid) const;
 
 private:
     mutable std::tstring m_aofolder;

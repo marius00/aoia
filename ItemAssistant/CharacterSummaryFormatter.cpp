@@ -56,7 +56,20 @@ namespace aoia
                         try
                         {
                             unsigned int value = boost::lexical_cast<unsigned int>(propertyValue);
-                            out << value;
+							if (j != 5)
+								out << value;
+							else {
+								if (value == 15)
+									out << 4;
+								else if (value == 7)
+									out << 3;
+								else if (value == 3)
+									out << 2;
+								else if (value == 1)
+									out << 1;
+								else 
+									out << "-";
+							}
 
                             // Update aggregated values
                             switch(j)

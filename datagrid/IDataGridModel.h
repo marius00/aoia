@@ -36,6 +36,7 @@ namespace aoia {
 
         /// Return the name of a specified item.
         virtual std::tstring getItemProperty(unsigned int index, unsigned int column) const = 0;
+		virtual bool getItemContainerId(unsigned int index, unsigned int& charid, unsigned int& containerid) const { return false; }
     };
 
     typedef boost::shared_ptr<IDataGridModel> IDataGridModelPtr;

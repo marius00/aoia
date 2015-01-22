@@ -34,7 +34,6 @@ std::vector<unsigned int> AODatabaseIndex::GetOffsets(ResourceType type) const
     return retval;
 }
 
-
 void AODatabaseIndex::ReadIndexFile(std::string filename, std::set<ResourceType>& types)
 {
     mapped_file_source index_file(filename);
@@ -43,7 +42,7 @@ void AODatabaseIndex::ReadIndexFile(std::string filename, std::set<ResourceType>
     // Extract some info from the header
     // Info found by tdb @ AODevs.
     unsigned int last_offset = *(unsigned int*)current_pos;
-    unsigned int block_size = *(unsigned int*)(current_pos + 0x0C);
+    unsigned int block_size = *(unsigned int*)(current_pos + 0x0c);
     unsigned int data_end = *(unsigned int*)(current_pos + 0x08);
     unsigned int data_start = *(unsigned int*)(current_pos + 0x48);
 
@@ -65,7 +64,6 @@ void AODatabaseIndex::ReadIndexFile(std::string filename, std::set<ResourceType>
     }
 }
 
-
 unsigned int AODatabaseIndex::ReadIndexBlock(const char* pos, const char* end, std::set<ResourceType>& types)
 {
     // Index blocks are stored in a double linked list. 
@@ -78,11 +76,13 @@ unsigned int AODatabaseIndex::ReadIndexBlock(const char* pos, const char* end, s
     unsigned short count = *(unsigned short*)(pos + 8);
 
     // Skip block header
-    pos += 0x12;
+    pos += 0x12 + 10;
     
     const unsigned int* int_pos = (unsigned int*)pos;
     while (count-- > 0 && (const char*)(int_pos + 2) < end)
     {
+		unsigned int ignored = *int_pos;
+		++int_pos;	
         unsigned int offset = *int_pos;
         ++int_pos;
         unsigned int resource_type = *int_pos;
@@ -93,6 +93,7 @@ unsigned int AODatabaseIndex::ReadIndexBlock(const char* pos, const char* end, s
         resource_type = _byteswap_ulong(resource_type);
         resource_id = _byteswap_ulong(resource_id);
 
+		
         if (types.empty() || types.find((ResourceType)resource_type) != types.end())
         {
             m_record_index[(ResourceType)resource_type][resource_id].insert(offset);

@@ -145,6 +145,22 @@ namespace aoia
         return m_result->Rows();
     }
 
+	
+	
+	bool ItemListDataModel::getItemContainerId(unsigned int index, unsigned int& charid, unsigned int& containerid) const {
+		if (!m_result) {
+			return false;
+		}
+
+		try {
+			containerid = boost::lexical_cast<unsigned int>(m_result->Data(index, COL_BACKPACK_NAME));
+			charid = boost::lexical_cast<unsigned int>(m_result->Data(index, COL_COUNT));
+			return true;
+		}
+		catch (boost::bad_lexical_cast &/*e*/) {
+			return false;
+		}
+	}
 
     std::tstring ItemListDataModel::getItemProperty(unsigned int index, unsigned int column) const
     {

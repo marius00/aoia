@@ -43,6 +43,10 @@
 #define IDR_TEMPLATE                    153
 #define IDB_SUMMARY_VIEW                154
 #define IDB_IDENTIFY_VIEW               155
+#define IDD_RENAME_BACKPACK             156
+#define IDD_RECIPES                     158
+#define IDR_HTML3                       159
+#define IDD_RECIPES_MANAGE              161
 #define IDC_EDIT2                       1001
 #define IDC_LIST1                       1002
 #define IDC_EDIT1                       1003
@@ -52,6 +56,7 @@
 #define IDC_ITEMTEXT                    1007
 #define IDC_CHARCOMBO                   1008
 #define IDC_STATIC_TOON                 1009
+#define IDC_RECIPECOMBO                 1009
 #define IDC_DIMENSION_COMBO             1010
 #define IDC_PIECES                      1011
 #define IDC_STATIC_TOON2                1011
@@ -76,7 +81,10 @@
 #define IDC_VERSION                     1031
 #define IDC_TREE1                       1032
 #define IDC_DESCRIPTION1                1033
+#define IDC_SHOW_PARTIALS2              1033
+#define IDC_SHOW_INFERNO_CLAN           1033
 #define IDC_DESCRIPTION2                1034
+#define IDC_SHOW_INFERNO_OMNI           1034
 #define IDC_DESCRIPTION3                1035
 #define IDC_PROGRESS1                   1036
 #define IDC_PROGRESS2                   1037
@@ -86,6 +94,16 @@
 #define IDC_EXCLUDE_ASSEMBLED           1041
 #define IDC_XYPHOS                      1045
 #define IDC_NONE                        1046
+#define IDC_BUTTONMANAGE                1048
+#define IDC_BUTTONMANAGE2               1049
+#define IDC_BUTTONREFRESH               1049
+#define IDC_CHARACTERCOMBO              1050
+#define IDC_BUTTON_EXPORT               1051
+#define IDC_BUTTON_DELETE               1052
+#define IDC_BUTTON4                     1053
+#define IDC_BUTTON_EDIT                 1053
+#define IDC_BUTTON_NEW                  1054
+#define IDC_BUTTON_IMPORT               1055
 #define ATL_IDC_TAB_CONTROL             0x3020
 #define ID_APPLY_NOW                    0x3021
 #define ID_WIZBACK                      0x3023
@@ -137,7 +155,8 @@
 #define ID_OPTIONS_MANUALPREFS          32841
 #define ID_OPTIONS_AUTOMATICPREFS       32842
 #define ID_OPTIONS_MINIMISETOTASKBAR    32844
-#define ID_OPTIONS_SHOWCREDS			32845
+#define ID_OPTIONS_SHOWCREDS            32845
+#define ID_RENAME_BAG                   32851
 #define ATL_IDS_IDLEMESSAGE             0xE001
 #define ID_FILE_NEW                     0xE100
 #define ID_FILE_OPEN                    0xE101
@@ -234,18 +253,16 @@
 #define ATL_IDS_SCTASKLIST              0xEF13
 #define ATL_IDS_MDICHILD                0xEF1F
 #define ATL_IDS_MRU_FILE                0xEFDA
-#ifndef IDC_STATIC
-	#define IDC_STATIC                      -1
-#endif
+#define IDC_STATIC                      -1
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        156
-#define _APS_NEXT_COMMAND_VALUE         32849
-#define _APS_NEXT_CONTROL_VALUE         1047
+#define _APS_NEXT_RESOURCE_VALUE        162
+#define _APS_NEXT_COMMAND_VALUE         32853
+#define _APS_NEXT_CONTROL_VALUE         1056
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
