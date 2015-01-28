@@ -1,0 +1,130 @@
+<html>
+<head>
+<style type="text/css">
+
+body {
+   font-family: "Arial";
+   font-size: 11pt;
+   margin: 0;
+   padding: 0;
+   background: #EEEEEE;
+   color : #AAAAAA;
+}
+
+h1 {
+   border-bottom: 2px solid black;
+   font-size: 110%;
+   font-weight: bold;
+   color : black;
+}
+
+h2 {
+   border-bottom: 1px dotted black;
+   font-size: 100%;
+   font-weight: bold;
+   color : black;
+}
+
+#summarytbl {
+   font-family: Lucidatypewriter, monospace;
+   padding: 2px;
+   border: 1px solid grey;
+}
+
+#summarytbl tr {
+   background: #F5F5F5;
+}
+
+#summarytbl td {
+   padding: 1px 10px;
+}
+
+#resulttbl {
+   font-family: Lucidatypewriter, monospace;
+   padding: 2px;
+   border: 1px solid grey;
+   text-align: center;
+}
+
+#resulttbl tr {
+   background: #F5F5F5;
+}
+
+#resulttbl td, th {
+   padding: 1px 10px;
+}
+
+#wrapper {
+   padding: 1em;
+   margin: 10px;
+   border: 2px solid black;
+   background: white;
+}
+
+#closebtn {
+   float: right;
+   display: inline;
+}
+
+.centered {
+   text-align: center;
+}
+
+.centered table {
+   margin: 0.5em auto;
+   text-align: left;
+}
+
+
+</style>
+</head>
+<body>
+
+<div id="wrapper">
+<span id="closebtn"><a href="http://ia-help.frellu.net/?topic=patternmatcher">Show Help</a></span>
+<h1>Pocket Boss Report</h1>
+
+<h2>Summary</h2>
+<table id="summarytbl">
+   <colgroup>
+      <col align=right />
+      <col align=left />
+   </colgroup>
+   <tr>
+      <td>Report Generated</td>
+      <td>%TIME_AND_DATE%</td>
+   </tr>
+   <tr>
+      <td>Search Scope</td>
+      <td>%TOON_NAME%</td>
+   </tr>
+   <tr>
+      <td>Pocket Boss Name</td>
+      <td>%PB_NAME%</td>
+   </tr>
+   <tr>
+      <td>Pocket Boss Availability</td>
+      <td>%PB_AVAILABILITY%</td>
+   </tr>
+   <tr>
+    <td>Pocket Boss Loot</td>
+    <td><a href="http://aopocket.tngk.com/index.php?PatternSelected=true&select=%PB_NAME%">AO Pocket</a></td>
+   </tr>
+</table>
+
+<p>On <font color="#FF6600"><b>%TOON_NAME%</b></font>,
+you have enough pieces to create
+<font color="#FF6600"><b>%PB_AVAILABILITY%</b></font> complete patterns of
+<font color="#FF6600"><b>%PB_NAME%</b></font>.</p>
+
+<p>See below for an overview of where to locate the pattern pieces you need.</P>
+
+<h2>Result Table</h2>
+<table id="resulttbl">
+%RESULT_TABLE%
+</table>
+
+</div>
+
+</body>
+</html>

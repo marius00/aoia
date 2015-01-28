@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|Win32">
+      <Configuration>Template</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{93E190D1-3E5B-4B19-BE87-5A820D7A8B14}</ProjectGuid>
+    <RootNamespace>ItemAssistant</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfAtl>Static</UseOfAtl>
+    <PlatformToolset>v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+    <PlatformToolset>v110_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <UseOfAtl>Static</UseOfAtl>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\..\ThirdParty\TinyXML;..\..\ThirdParty\WTL v8.1\Include;C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53;..\..\ThirdParty\SQLite 3;..\..\ThirdParty\Boost 1.53;..\..\ThirdParty\WTL80\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53\stage\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\TinyXML;C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\WTL v8.1\Include;C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53;C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\SQLite 3;..\..\ThirdParty\Boost 1.53;..\..\ThirdParty\sqlite 3;..\..\ThirdParty\tinyxml;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53\stage\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <IncludePath>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\TinyXML;C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\WTL v8.1\Include;C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53;C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\SQLite 3;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53\stage\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)..\deps;$(SolutionDir)..\deps\WTL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level2</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAsManaged>false</CompileAsManaged>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Externals\WTL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winmm.lib;datagrid.lib;shared.lib;tinyxmlstl.lib;sqlite.lib;ItemAssistantCore.lib;Parsers.lib;csvexport.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)ItemAssistant.exe</OutputFile>
+      <AdditionalLibraryDirectories>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53\stage\lib;$(SolutionDir)$(Configuration);..\..\ThirdParty\Boost 1.53\lib32-msvc-11.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EnableUAC>true</EnableUAC>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)ItemAssistant.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>$(BOOSTDIR);$(SolutionDir);$(SolutionDir)..\deps;$(SolutionDir)..\deps\WTL\include\;..\..\aoia\boost;..\..\ThirdParty\WTL80\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAsManaged>false</CompileAsManaged>
+      <BrowseInformation>true</BrowseInformation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Externals\WTL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winmm.lib;datagrid.lib;shared.lib;tinyxmlstl.lib;sqlite.lib;ItemAssistantCore.lib;Parsers.lib;csvexport.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)ItemAssistant.exe</OutputFile>
+      <AdditionalLibraryDirectories>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53\stage\lib;$(SolutionDir)$(Configuration);..\..\ThirdParty\Boost 1.53\lib64-msvc-11.0;..\..\ThirdParty\Boost 1.53\lib32-msvc-11.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EnableUAC>true</EnableUAC>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)ItemAssistant.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y README.txt "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\Andrew\Documents\Visual Studio 2012\Projects\ThirdParty\Boost 1.53\stage\lib;$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AboutDlg.cpp" />
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CharacterParserDumper.cpp" />
+    <ClCompile Include="CharacterSummaryFormatter.cpp" />
+    <ClCompile Include="DBManager.cpp" />
+    <ClCompile Include="Desktop.cpp" />
+    <ClCompile Include="GuiServices.cpp" />
+    <ClCompile Include="InjectionSupport.cpp" />
+    <ClCompile Include="ItemAssistant.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="mdump.cpp" />
+    <ClCompile Include="MFTreeView.cpp" />
+    <ClCompile Include="NTRAY.CPP" />
+    <ClCompile Include="PatternAvailabilityCalculator.cpp" />
+    <ClCompile Include="ProgressDialog.cpp" />
+    <ClCompile Include="ContainerManager.cpp" />
+    <ClCompile Include="RecipeList.cpp" />
+    <ClCompile Include="RecipeLoader.cpp" />
+    <ClCompile Include="RecipeManageDlg.cpp" />
+    <ClCompile Include="RecipePanel.cpp" />
+    <ClCompile Include="RecipesView.cpp" />
+    <ClCompile Include="RenameBackpackDlg.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TabFrame.cpp" />
+    <ClCompile Include="IdentifyListDataModel.cpp" />
+    <ClCompile Include="IdentifyView.cpp" />
+    <ClCompile Include="DataModel.cpp" />
+    <ClCompile Include="SummaryView.cpp" />
+    <ClCompile Include="FindPanel.cpp" />
+    <ClCompile Include="InfoPanel.cpp" />
+    <ClCompile Include="InventoryView.cpp" />
+    <ClCompile Include="InvTreeItems.cpp" />
+    <ClCompile Include="ItemListDataModel.cpp" />
+    <ClCompile Include="ServerSelectorDialog.cpp" />
+    <ClCompile Include="FilterPanel.cpp" />
+    <ClCompile Include="PatternMatchView.cpp" />
+    <ClCompile Include="PatternReport.cpp" />
+    <ClCompile Include="AoMsgView.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="TempContainerCache.cpp" />
+    <ClCompile Include="temp_win8_debug.cpp" />
+    <ClCompile Include="WebView.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AboutDlg.h" />
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="CharacterParserDumper.h" />
+    <ClInclude Include="CharacterSummaryFormatter.h" />
+    <ClInclude Include="DBManager.h" />
+    <ClInclude Include="Desktop.h" />
+    <ClInclude Include="GuiServices.h" />
+    <ClInclude Include="InjectionSupport.h" />
+    <ClInclude Include="InventoryIDs.h" />
+    <ClInclude Include="ItemAssistant.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="mdump.h" />
+    <ClInclude Include="MFTreeView.h" />
+    <ClInclude Include="NTRAY.H" />
+    <ClInclude Include="PatternAvailabilityCalculator.h" />
+    <ClInclude Include="ProgressDialog.h" />
+    <ClInclude Include="RecipeList.h" />
+    <ClInclude Include="RecipeLoader.h" />
+    <ClInclude Include="RecipeManageDlg.h" />
+    <ClInclude Include="RecipePanel.h" />
+    <ClInclude Include="RecipesView.h" />
+    <ClInclude Include="RenameBackpackDlg.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ContainerManager.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TabFrame.h" />
+    <ClInclude Include="TempContainerCache.h" />
+    <ClInclude Include="Version.h" />
+    <ClInclude Include="IdentifyListDataModel.h" />
+    <ClInclude Include="IdentifyView.h" />
+    <ClInclude Include="DataModel.h" />
+    <ClInclude Include="SummaryView.h" />
+    <ClInclude Include="FindPanel.h" />
+    <ClInclude Include="InfoPanel.h" />
+    <ClInclude Include="InventoryView.h" />
+    <ClInclude Include="InvTreeItems.h" />
+    <ClInclude Include="ItemListDataModel.h" />
+    <ClInclude Include="ServerSelectorDialog.h" />
+    <ClInclude Include="FilterPanel.h" />
+    <ClInclude Include="PatternMatchView.h" />
+    <ClInclude Include="PatternReport.h" />
+    <ClInclude Include="AoMsgView.h" />
+    <ClInclude Include="WebView.h" />
+    <ClInclude Include="AOCharacterActionIDs.h" />
+    <ClInclude Include="AOMessageIDs.h" />
+    <ClInclude Include="AOMessageParsers.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\AOMessageView.bmp" />
+    <None Include="res\html1.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\html2.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\html3.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\ico120.ico" />
+    <None Include="res\InventoryView.bmp" />
+    <None Include="ItemAssistant.ico" />
+    <None Include="res\mainfram.bmp" />
+    <None Include="res\PatternMatcher.bmp" />
+    <None Include="res\PlayerShopMonitor.bmp" />
+    <None Include="small.ico" />
+    <None Include="res\WTL_Test.ico" />
+    <None Include="res\IdentifyViewToolbar.bmp" />
+    <None Include="res\SummaryViewToolbar.bmp" />
+    <None Include="res\template.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ItemAssistant.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\csvexport\csvexport.vcxproj">
+      <Project>{29e7696b-2ce6-40e9-b732-dc54b368470c}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\datagrid\datagrid.vcxproj">
+      <Project>{6096d08e-50bf-444c-b40e-dc1a8be4166c}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\ItemAssistantCore\ItemAssistantCore.vcxproj">
+      <Project>{d9effcc4-4544-4e8f-9920-2f7cd55d814b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\ItemAssistantHook\ItemAssistantHook.vcxproj">
+      <Project>{cf2ed5b5-5e2b-4bb5-8a68-a95ae576599c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\Parsers\Parsers.vcxproj">
+      <Project>{85cb52a8-5c89-459c-9175-2d55e93a5375}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginSDK\PluginSDK.vcxproj">
+      <Project>{27846e26-fa81-4b43-997d-62b0338f1a37}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\settings\settings.vcxproj">
+      <Project>{49a0704e-0eb7-4df3-884e-29bcba7ec86c}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\shared.vcxproj">
+      <Project>{370e1e96-79a9-4c9d-83b2-6e8298a90655}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="ItemAssistant.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

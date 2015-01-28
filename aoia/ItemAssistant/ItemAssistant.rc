@@ -1,0 +1,740 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,1,5,5
+ PRODUCTVERSION 1,1,5,5
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+            VALUE "Comments", "Homepage is located at http://ia.frellu.net"
+            VALUE "CompanyName", "http://ia.frellu.net"
+            VALUE "FileDescription", "Anarchy Online Item Assistant++"
+            VALUE "FileVersion", "1.1.5.5"
+            VALUE "InternalName", "AOIA"
+            VALUE "LegalCopyright", "Copyright (c) 2006 - 2010"
+            VALUE "OriginalFilename", "ItemAssistant.exe"
+            VALUE "ProductName", "Item Assistant++"
+            VALUE "ProductVersion", "1.1.5.5"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_INVENTORY_VIEW      BITMAP                  "res\\InventoryView.bmp"
+IDB_AOMESSAGE_VIEW      BITMAP                  "res\\AOMessageView.bmp"
+IDB_PATTERNMATCH_VIEW   BITMAP                  "res\\PatternMatcher.bmp"
+IDB_PLAYERSHOP_VIEW     BITMAP                  "res\\PlayerShopMonitor.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_ITEM_POPUP_MULTISEL MENU
+BEGIN
+    POPUP "Item Context Menu"
+    BEGIN
+        MENUITEM "Copy Item Names",             ID_COPY_ITEMNAME
+        POPUP "Copy Items HTML Links"
+        BEGIN
+            MENUITEM "Auno",                        ID_COPY_AUNO_ITEMREF
+            MENUITEM "AO Mainframe",                ID_COPY_JAYDEE_ITEMREF
+            MENUITEM "Xyphos",                      ID_COPY_XYPHOS_ITEMREF
+        END
+        POPUP "Copy Items VBB Links"
+        BEGIN
+            MENUITEM "Auno",                        ID_COPY_AUNO_ITEMREF_VBB
+            MENUITEM "AO Mainframe",                ID_COPY_JAYDEE_ITEMREF_VBB
+            MENUITEM "Xyphos",                      ID_COPY_XYPHOS_ITEMREF_VBB
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Export Items to AO Script",   ID_COPY_AO_ITEMREF
+        POPUP "Export Items to CSV File"
+        BEGIN
+            MENUITEM "Auno",                        ID_EXPORTTOCSV_AUNO
+            MENUITEM "AO Mainframe",                ID_EXPORTTOCSV_JAYDEE
+            MENUITEM "Xyphos",                      ID_EXPORTTOCSV_XYPHOS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Delete Items",                ID_DELETE
+    END
+END
+
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\mainfram.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "&Find\tCtrl+F",               ID_INV_FIND
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Automaticaly Locate AO Prefs", ID_OPTIONS_AUTOMATICPREFS
+        MENUITEM "&Manually Locate AO Prefs",   ID_OPTIONS_MANUALPREFS
+        MENUITEM "&Show Creds in Inventory",    ID_OPTIONS_SHOWCREDS
+        MENUITEM "Minimise to &Taskbar",        ID_OPTIONS_MINIMISETOTASKBAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Support Forums...",          ID_HELP_SUPPORTFORUM
+        MENUITEM "&Online Help...",             ID_HELP_INDEX
+        MENUITEM SEPARATOR
+        MENUITEM "&Check for Updates...",       ID_HELP_CHECKFORUPDATES
+        MENUITEM SEPARATOR
+        MENUITEM "&About Item Assistant++",     ID_APP_ABOUT
+    END
+END
+
+IDR_ITEM_POPUP MENU
+BEGIN
+    POPUP "Item Context Menu"
+    BEGIN
+        POPUP "View Item Stats"
+        BEGIN
+            MENUITEM "Auno",                        ID_VIEW_ITEMSTATS_AUNO
+            MENUITEM "AO Mainframe",                ID_VIEW_ITEMSTATS_JAYDEE
+            MENUITEM "Xyphos",                      ID_VIEW_ITEMSTATS_XYPHOS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Copy Item Name",              ID_COPY_ITEMNAME
+        POPUP "Copy Item HTML Link"
+        BEGIN
+            MENUITEM "Auno",                        ID_COPY_AUNO_ITEMREF
+            MENUITEM "AO Mainframe",                ID_COPY_JAYDEE_ITEMREF
+            MENUITEM "Xyphos",                      ID_COPY_XYPHOS_ITEMREF
+        END
+        POPUP "Copy Item VBB Link"
+        BEGIN
+            MENUITEM "Auno",                        ID_COPY_AUNO_ITEMREF_VBB
+            MENUITEM "AO Mainframe",                ID_COPY_JAYDEE_ITEMREF_VBB
+            MENUITEM "Xyphos",                      ID_COPYITEMVBBLINK_XYPHOS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Export Item to AO Script",    ID_COPY_AO_ITEMREF
+        POPUP "Export Item to CSV File"
+        BEGIN
+            MENUITEM "Auno",                        ID_EXPORTTOCSV_AUNO
+            MENUITEM "AO Mainframe",                ID_EXPORTTOCSV_JAYDEE
+            MENUITEM "Xyphos",                      ID_EXPORTTOCSV_XYPHOS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Delete Item",                 ID_DELETE
+    END
+END
+
+IDR_TRAY_POPUP MENU
+BEGIN
+    POPUP "Show / Hide"
+    BEGIN
+        MENUITEM "Show / Hide",                 ID_TRAY_SHOW
+        MENUITEM "About ItemAssistant++",       ID_APP_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_APP_EXIT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HTML
+//
+
+IDR_HTML1               HTML                    "res\\html1.htm"
+IDR_HTML2               HTML                    "res\\html2.htm"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_APP_ABOUT
+    SEPARATOR
+    BUTTON      ID_EDIT_CLEAR
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    VK_DELETE,      ID_EDIT_CLEAR,          VIRTKEY, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+END
+
+IDR_INV_ACCEL ACCELERATORS
+BEGIN
+    "I",            ID_INFO,                VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_INV_FIND,            VIRTKEY, CONTROL, NOINVERT
+    VK_ESCAPE,      ID_INV_FIND_HIDE,       VIRTKEY, NOINVERT
+END
+
+IDR_PB_ACCEL ACCELERATORS
+BEGIN
+    "F",            ID_PB_FILTER,           VIRTKEY, CONTROL, NOINVERT
+    VK_ESCAPE,      ID_PB_FILTER_HIDE,      VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PLAYERSHOP DIALOGEX 0, 0, 257, 159
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "TODO: layout formview",IDC_STATIC,55,42,74,8
+    EDITTEXT        IDC_EDIT1,169,66,40,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TREE1,"SysTreeView32",WS_BORDER | WS_TABSTOP,35,57,60,50
+END
+
+IDD_WEB DIALOGEX 0, 0, 218, 158
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN
+EXSTYLE WS_EX_STATICEDGE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "IE PLACEHOLDER",IDC_IE_PLACEHOLDER,0,0,217,158
+END
+
+IDD_ABOUTBOX DIALOGEX 22, 17, 230, 75
+STYLE DS_SETFONT | DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About - Item Assistant++"
+FONT 10, "Verdana", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,178,11,42,22,WS_GROUP
+    LTEXT           "Anarchy Online Item Assistant++ (AO:IA++)",IDC_STATIC,21,6,147,8
+    RTEXT           "Experimental Version",IDC_VERSION,144,60,81,8
+    LTEXT           "Homepage:  http://ia.frellu.net",IDC_STATIC,43,48,103,8
+    CTEXT           "'Plus' Update by 'Dream'",IDC_STATIC,26,16,129,8
+    CTEXT           "++ Update by officeleet",IDC_STATIC,26,25,129,8
+END
+
+IDD_MSG_FORM DIALOGEX 0, 0, 236, 210
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 9, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_EDIT2,83,2,150,81,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_TABSTOP,3,2,77,81,WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_SQL_EDIT,2,181,231,26,ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN
+    CONTROL         "",IDC_LIST2,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_TABSTOP,2,85,231,94,WS_EX_CLIENTEDGE
+END
+
+IDD_BOT_FORM DIALOGEX 0, 0, 238, 105
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 9, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_EDIT1,48,4,180,12,ES_AUTOHSCROLL
+    RTEXT           "Server/Path",IDC_STATIC,8,4,36,8,SS_CENTERIMAGE
+    RTEXT           "Login",IDC_STATIC,8,20,36,8,SS_CENTERIMAGE
+    RTEXT           "Password",IDC_STATIC,8,36,36,8,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT2,48,20,180,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,48,36,180,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Export",IDC_BUTTON1,180,72,50,14
+    COMBOBOX        IDC_COMBO1,48,52,78,54,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Character",IDC_STATIC,8,52,36,8,SS_CENTERIMAGE
+END
+
+IDD_INV_FIND DIALOGEX 0, 0, 340, 33
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_CLIPCHILDREN
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_ITEMTEXT,38,2,145,12,ES_AUTOHSCROLL
+    LTEXT           "Find Item",IDC_STATIC,4,4,30,8
+    COMBOBOX        IDC_CHARCOMBO,240,10,89,60,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Character",IDC_STATIC_TOON,203,12,33,8
+    LTEXT           "QL Min",IDC_STATIC,4,19,22,8
+    EDITTEXT        IDC_QLMIN,38,17,49,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "QL Max",IDC_STATIC,97,19,25,8
+    EDITTEXT        IDC_QLMAX,134,17,49,12,ES_AUTOHSCROLL | ES_NUMBER
+END
+
+IDD_RECIPES DIALOGEX 0, 0, 316, 35
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_CHARACTERCOMBO,11,16,82,74,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_RECIPECOMBO,100,16,146,74,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Manage",IDC_BUTTONMANAGE,249,15,50,14
+    LTEXT           "Character:",IDC_STATIC,13,6,36,8
+    LTEXT           "Template:",IDC_STATIC,101,7,33,8
+END
+
+IDD_PATTERN_MATCHER DIALOGEX 0, 0, 134, 140
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Character",IDC_STATIC,8,20,37,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_CHARCOMBO,45,20,82,74,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Show All",IDC_SHOW_ALL,"Button",BS_AUTORADIOBUTTON,16,48,43,10
+    CONTROL         "Show Partials",IDC_SHOW_PARTIALS,"Button",BS_AUTORADIOBUTTON,16,59,59,10
+    CONTROL         "Show Completable",IDC_COMPLETABLE,"Button",BS_AUTORADIOBUTTON,16,70,75,10
+    CONTROL         "Inferno G Omni",IDC_SHOW_INFERNO_OMNI,"Button",BS_AUTORADIOBUTTON,16,81,65,10
+    CONTROL         "Inferno G Clan",IDC_SHOW_INFERNO_CLAN,"Button",BS_AUTORADIOBUTTON,16,92,63,10
+    GROUPBOX        "Pattern Pieces",IDC_STATIC,5,36,120,82
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",PBS_SMOOTH,6,121,120,12
+    LTEXT           "Filter Settings:",IDC_STATIC,7,7,48,8
+    CONTROL         "Exclude ABCD Assemblies",IDC_EXCLUDE_ASSEMBLED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,106,93,10
+END
+
+IDD_ITEM_INFO DIALOGEX 0, 0, 170, 99
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_DISABLED | WS_TABSTOP,6,18,156,42,WS_EX_CLIENTEDGE
+    LTEXT           "Item Information",IDC_STATIC,6,6,55,8
+    PUSHBUTTON      "AOMainFrame",IDC_JAYDEE,60,78,50,14
+    PUSHBUTTON      "AUNO",IDC_AUNO,6,78,50,14
+    LTEXT           "Show Item Stats:",IDC_BUTTON_LABEL,6,66,56,8
+    PUSHBUTTON      "Xyphos",IDC_XYPHOS,114,78,50,14
+END
+
+IDD_DUAL_PROGRESS DIALOGEX 0, 0, 318, 105
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Progress Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Description line 1",IDC_DESCRIPTION1,7,7,304,8
+    LTEXT           "Description line 2",IDC_DESCRIPTION2,7,23,304,8
+    LTEXT           "Description line 3",IDC_DESCRIPTION3,7,55,304,8
+    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",WS_BORDER,7,33,304,14
+    CONTROL         "",IDC_PROGRESS2,"msctls_progress32",WS_BORDER,7,65,304,14
+    PUSHBUTTON      "Abort",IDCANCEL,133,84,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_PLAYERSHOP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 250
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+
+    IDD_WEB, DIALOG
+    BEGIN
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+    END
+
+    IDD_MSG_FORM, DIALOG
+    BEGIN
+    END
+
+    IDD_BOT_FORM, DIALOG
+    BEGIN
+    END
+
+    IDD_INV_FIND, DIALOG
+    BEGIN
+        RIGHTMARGIN, 253
+    END
+
+    IDD_RECIPES, DIALOG
+    BEGIN
+        RIGHTMARGIN, 314
+    END
+
+    IDD_PATTERN_MATCHER, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 130
+    END
+
+    IDD_ITEM_INFO, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 68
+    END
+
+    IDD_DUAL_PROGRESS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 311
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 98
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\ico120.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "AO Item Assistant"
+    IDR_INVENTORY_VIEW      "Inventory"
+    IDR_DEBUG_VIEW          "Debug Messages"
+    IDS_AUNO_ITEMREF_URL    "http://auno.org/ao/db.php?id=%lowid%&ql=%ql%"
+    IDS_JAYDEE_ITEMREF_URL  "http://ao.tcdev.de/showitem.asp?LowID=%lowid%&HiID=%hiid%&QL=%ql%"
+    IDS_AO_ITEMREF_URL      "itemref://%lowid%/%hiid%/%ql%"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_XYPHOS_ITEMREF_URL  "http://www.xyphos.com/aodb.php?id=%lowid%&ql=%ql%"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_HELP_INDEX           "Go to the on-line documentation\nGo To On-Line Help"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_HELP_SUPPORTFORUM    "Go to the on-line support forum\nGo To Support Forum"
+    ID_HELP_CHECKFORUPDATES "Check for a newer version of this application\nPerform Update Check On-Line"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INV_FIND             "Find matching items\nFind Items"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_SCSIZE          "Change the window size"
+    ATL_IDS_SCMOVE          "Change the window position"
+    ATL_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    ATL_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    ATL_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    ATL_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    ATL_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_SCRESTORE       "Restore the window to normal size"
+    ATL_IDS_SCTASKLIST      "Activate Task List"
+    ATL_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_MRU_FILE        "Open this document"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Norwegian, Bokmål (Norway) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NOR)
+LANGUAGE LANG_NORWEGIAN, SUBLANG_NORWEGIAN_BOKMAL
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_SUMMARY_VIEW        BITMAP                  "res\\SummaryViewToolbar.bmp"
+IDB_IDENTIFY_VIEW       BITMAP                  "res\\IdentifyViewToolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HTML
+//
+
+IDR_TEMPLATE            HTML                    "res\\template.htm"
+IDR_HTML3               HTML                    "res\\html3.htm"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SERVER_SELECTOR DIALOGEX 0, 0, 192, 111
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Online Database Selector - Item Assistant"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,83,90,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,135,90,50,14
+    GROUPBOX        "Select Online Item Database",IDC_STATIC,7,7,178,74
+    CONTROL         "Auno",IDC_AUNO,"Button",BS_AUTORADIOBUTTON,37,23,33,10
+    CONTROL         "AO Mainframe",IDC_JAYDEE,"Button",BS_AUTORADIOBUTTON,37,37,61,10
+    CONTROL         "Xyphos",IDC_XYPHOS,"Button",BS_AUTORADIOBUTTON,37,51,39,10
+    CONTROL         "None",IDC_NONE,"Button",BS_AUTORADIOBUTTON,37,65,33,10
+END
+
+IDD_RENAME_BACKPACK DIALOGEX 0, 0, 253, 50
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Rename backpack"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT1,33,7,210,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,19,26,96,14
+    PUSHBUTTON      "Cancel",IDCANCEL,135,27,95,13
+    LTEXT           "Label:",IDC_STATIC,7,7,23,13,SS_CENTERIMAGE
+END
+
+IDD_RECIPES_MANAGE DIALOGEX 0, 0, 235, 189
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Close",IDOK,176,164,50,14
+    PUSHBUTTON      "Import",IDC_BUTTON_IMPORT,15,163,50,14,WS_DISABLED
+    PUSHBUTTON      "Export",IDC_BUTTON_EXPORT,67,163,50,14,WS_DISABLED
+    LISTBOX         IDC_LIST2,15,15,151,146,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Delete",IDC_BUTTON_DELETE,170,47,50,14,WS_DISABLED
+    PUSHBUTTON      "Edit",IDC_BUTTON_EDIT,170,31,50,14,WS_DISABLED
+    PUSHBUTTON      "Create new",IDC_BUTTON_NEW,170,15,50,14,WS_DISABLED
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_SERVER_SELECTOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 185
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 104
+    END
+
+    IDD_RENAME_BACKPACK, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 246
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 43
+    END
+
+    IDD_RECIPES_MANAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 182
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Norwegian, Bokmål (Norway) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

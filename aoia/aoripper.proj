@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5" DefaultTargets="prepare_build;build">
+
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+	<!--<UsingTask TaskName="MFTasks.SetEnvVar" AssemblyFile="MFTasks.dll" />-->
+
+	<PropertyGroup>
+		<Version>0.0.0.0</Version>
+		<Version Condition="'$(BUILD_NUMBER)'!=''">$(BUILD_NUMBER)</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectsToBuild Include="Shared/Shared.vcproj" />
+		<ProjectsToBuild Include="AORipper/AORipper.vcproj" />
+	</ItemGroup>
+
+	<Target Name="clean">
+		<Message Text="Cleaning" />
+		<VCBuild
+            Projects="@(ProjectsToBuild)"
+            Configuration="Release|Win32"
+            SolutionFile="ItemAssistant.sln"
+            Clean="true" />
+	</Target>
+
+	<Target Name="prepare_build">
+		<Message Text="Preparing" />
+		<ItemGroup>
+			<OldOutputFiles Include="Release/AORipper*.zip" />
+		</ItemGroup>
+		<Delete Files="@(OldOutputFiles)" />
+	</Target>
+
+	<Target Name="build">
+		<Message Text="Building" />
+		<VCBuild 
+            Projects="@(ProjectsToBuild)" 
+            Configuration="Release|Win32" 
+            SolutionFile="ItemAssistant.sln"
+            UseEnvironment="true" 
+            Rebuild="true" />
+	</Target>
+
+	<Target Name="package" DependsOnTargets="prepare_build;build">
+		<Message Text="Packaging" />
+		<ItemGroup>
+			<Files Include="Release/AORipper.exe" />
+			<Files Include="Release/sqlite3.dll" />
+			<Files Include="Release/*.manifest" />
+			<Files Include="Release/msvc*.dll" />
+		</ItemGroup>
+		<Zip
+			Files="@(Files)" 
+		    WorkingDirectory="Release"
+			ZipFileName="Release/AORipper-$(Version).zip" />
+	</Target>
+
+</Project>

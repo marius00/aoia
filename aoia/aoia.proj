@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="prepare_build;build">
+
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildTeamCityTasks\MSBuild.TeamCity.Tasks.Targets"/>
+
+    <Target Name="clean">
+        <Message Text="Cleaning" />
+        <MSBuild
+            Projects="ItemAssistant.sln"
+            Properties="Configuration=Release"
+            Targets="Clean" />
+    </Target>
+
+    <Target Name="prepare_build">
+        <Message Text="Preparing" />
+        <ItemGroup>
+            <OldOutputFiles Include="Release/*.zip" />
+            <OldOutputFiles Include="ItemAssistantInstaller/*.exe" />
+        </ItemGroup>
+        <Delete Files="@(OldOutputFiles)" />
+    </Target>
+
+    <Target Name="get_official_repo_version" Condition=" '$(OFFICIAL)' != '' ">
+        <Exec Command="hg log -r tip --template {latesttag}.0 > $(Temp)\version.txt"/>
+        <ReadLinesFromFile File="$(Temp)\version.txt">
+            <Output TaskParameter="Lines" PropertyName="Version"/>
+        </ReadLinesFromFile>
+        <Message Text="Repository Version: $(Version)" />
+        <BuildNumber Number="$(Version)-{build.number}" />
+    </Target>
+
+    <Target Name="get_repo_version" Condition=" '$(OFFICIAL)' == '' ">
+        <Exec Command="hg log -r tip --template {latesttag}.{latesttagdistance} > $(Temp)\version.txt"/>
+        <ReadLinesFromFile File="$(Temp)\version.txt">
+            <Output TaskParameter="Lines" PropertyName="Version"/>
+        </ReadLinesFromFile>
+        <Message Text="Repository Version: $(Version)" />
+        <BuildNumber Number="$(Version)-{build.number}" />
+    </Target>
+
+    <Target Name="get_version" DependsOnTargets="get_official_repo_version;get_repo_version">
+        <Message Text="Official switch: $(OFFICIAL)" />
+    </Target>
+    
+    <Target Name="update_version_resource" DependsOnTargets="get_version">
+        <Message Text="Updating Version Resource" />
+        <ItemGroup>
+            <ResourceFile Include="ItemAssistant/*.rc" />
+        </ItemGroup>
+        <FileUpdate Files="@(ResourceFile)"
+                    Encoding="ASCII"
+                    Regex="VERSION +\d+, ?\d+, ?\d+, ?\d+"
+                    ReplacementText="VERSION $(Version)" />
+        <FileUpdate Files="@(ResourceFile)"
+                    Encoding="ASCII"
+                    Regex="VERSION (\d+)\.(\d+)\.(\d+)\.(\d+)"
+                    ReplacementText="VERSION $1,$2,$3,$4" />
+        <FileUpdate Files="@(ResourceFile)"
+                    Encoding="ASCII"
+                    Regex="&quot;\d+, ?\d+, ?\d+, ?\d+&quot;"
+                    ReplacementText="&quot;$(Version)&quot;" />
+        <FileUpdate Files="@(ResourceFile)"
+                    Encoding="ASCII"
+                    Regex="&quot;(\d+)\.(\d+)\.(\d+)\.(\d+)&quot;"
+                    ReplacementText="&quot;$1, $2, $3, $4&quot;" />
+    </Target>
+
+    <Target Name="update_version" DependsOnTargets="get_version">
+        <Message Text="Updating Version" />
+        <ItemGroup>
+            <VersionFile Include="ItemAssistant/Version.h" />
+        </ItemGroup>
+        <WriteLinesToFile
+            File="@(VersionFile)"
+            Lines="#pragma once;;const std::tstring g_versionNumber = _T(&quot;$(Version)&quot;)%3b;"
+            Overwrite="true" />
+    </Target>
+
+    <Target Name="build">
+        <Message Text="Building" />
+        <MSBuild
+            Projects="ItemAssistant.sln"
+            Properties="Configuration=Release"
+            Targets="Rebuild" />
+    </Target>
+
+    <Target Name="test">
+        <Message Text="Testing" />
+        <RunGoogleTests TestExePath="Release/ParsersTests.exe" />
+        <RunGoogleTests TestExePath="Release/csvexporttests.exe" />
+    </Target>
+
+    <Target Name="package_pdb">
+        <ItemGroup>
+            <PdbFiles Include="**/*.pdb" />
+        </ItemGroup>
+        <Zip
+			Files="@(PdbFiles)"
+			WorkingDirectory="Release"
+			ZipFileName="Release/ItemAssistant-PDB-$(Version).zip"
+			Flatten="true"
+        />
+    </Target>
+
+    <Target Name="package" DependsOnTargets="prepare_build;update_version;update_version_resource;build;package_pdb">
+        <Message Text="Packaging" />
+        <ItemGroup>
+            <Files Include="Release/ItemAssistant.exe" />
+            <Files Include="Release/ItemAssistantCore.dll" />
+            <Files Include="Release/ItemAssistantHook.dll" />
+            <Files Include="Release/README.txt" />
+            <Files Include="$(VS100COMNTOOLS)..\..\VC\redist\x86\Microsoft.VC100.CRT\*.dll" />
+        </ItemGroup>
+        <Zip
+			Files="@(Files)"
+			WorkingDirectory="Release"
+			ZipFileName="Release/ItemAssistant-$(Version).zip"
+			Flatten="true"
+        />
+    </Target>
+
+    <Target Name="installer">
+        <Exec command="&quot;$(NSISDIR)\makensis.exe&quot; /DBUILD_NUMBER=$(Version) aoia_installer.nsi" WorkingDirectory="ItemAssistantInstaller" />
+    </Target>
+
+</Project>

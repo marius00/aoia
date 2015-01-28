@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Plugins">
+      <UniqueIdentifier>{260251d6-f4d8-4a87-af9f-b3b2cde57fe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\IdentifyView">
+      <UniqueIdentifier>{5e0f4a5d-56e5-4de3-8bdf-96d86b71bdc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\IdentifyView\Resources">
+      <UniqueIdentifier>{88c95849-0848-4ef8-958e-630d5fbf5235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\SummaryView">
+      <UniqueIdentifier>{121bd699-9941-4aee-92f0-0b476feb36d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\SummaryView\Resources">
+      <UniqueIdentifier>{a4f847a6-5cbc-4385-915e-7c767ed0099a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\Inventory">
+      <UniqueIdentifier>{7d7f7b84-f5db-487b-b30d-5a007a2d60c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\PatternMatcher">
+      <UniqueIdentifier>{edf5df60-66af-4a04-aa3c-a581969d544b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\Debug">
+      <UniqueIdentifier>{28a2bc29-24d3-4ada-b6ea-447aa39ff568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{fd0f6e1a-7fbe-4d70-8487-11c5c7c6cef9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AOProtocol">
+      <UniqueIdentifier>{ac39b9c8-bf87-48da-911c-e612aa1b7249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\RecipeLists">
+      <UniqueIdentifier>{0e7a63c1-8ad9-4f24-bd3c-f293c01f51e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AboutDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DBManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InjectionSupport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemAssistant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MFTreeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NTRAY.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TabFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IdentifyListDataModel.cpp">
+      <Filter>Plugins\IdentifyView</Filter>
+    </ClCompile>
+    <ClCompile Include="IdentifyView.cpp">
+      <Filter>Plugins\IdentifyView</Filter>
+    </ClCompile>
+    <ClCompile Include="DataModel.cpp">
+      <Filter>Plugins\SummaryView</Filter>
+    </ClCompile>
+    <ClCompile Include="SummaryView.cpp">
+      <Filter>Plugins\SummaryView</Filter>
+    </ClCompile>
+    <ClCompile Include="FindPanel.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoPanel.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryView.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="InvTreeItems.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemListDataModel.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSelectorDialog.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="FilterPanel.cpp">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternMatchView.cpp">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternReport.cpp">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="WebView.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="AoMsgView.cpp">
+      <Filter>Plugins\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="mdump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiServices.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempContainerCache.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterParserDumper.cpp">
+      <Filter>Plugins\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Desktop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSummaryFormatter.cpp">
+      <Filter>Plugins\SummaryView</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternAvailabilityCalculator.cpp">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="RenameBackpackDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeLoader.cpp">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeList.cpp">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipesView.cpp">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipePanel.cpp">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeManageDlg.cpp">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClCompile>
+    <ClCompile Include="temp_win8_debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AboutDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DBManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InjectionSupport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemAssistant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFTreeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NTRAY.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TabFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IdentifyListDataModel.h">
+      <Filter>Plugins\IdentifyView</Filter>
+    </ClInclude>
+    <ClInclude Include="IdentifyView.h">
+      <Filter>Plugins\IdentifyView</Filter>
+    </ClInclude>
+    <ClInclude Include="DataModel.h">
+      <Filter>Plugins\SummaryView</Filter>
+    </ClInclude>
+    <ClInclude Include="SummaryView.h">
+      <Filter>Plugins\SummaryView</Filter>
+    </ClInclude>
+    <ClInclude Include="FindPanel.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoPanel.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryView.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InvTreeItems.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemListDataModel.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSelectorDialog.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterPanel.h">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternMatchView.h">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternReport.h">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="WebView.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="AOCharacterActionIDs.h">
+      <Filter>AOProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="AOMessageIDs.h">
+      <Filter>AOProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="AOMessageParsers.h">
+      <Filter>AOProtocol</Filter>
+    </ClInclude>
+    <ClInclude Include="AoMsgView.h">
+      <Filter>Plugins\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="mdump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiServices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TempContainerCache.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryIDs.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterParserDumper.h">
+      <Filter>Plugins\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Desktop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSummaryFormatter.h">
+      <Filter>Plugins\SummaryView</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternAvailabilityCalculator.h">
+      <Filter>Plugins\PatternMatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="RenameBackpackDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeList.h">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeLoader.h">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipesView.h">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipePanel.h">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeManageDlg.h">
+      <Filter>Plugins\RecipeLists</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\AOMessageView.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\html1.htm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\html2.htm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\ico120.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\InventoryView.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ItemAssistant.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\mainfram.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\PatternMatcher.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\PlayerShopMonitor.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\WTL_Test.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\IdentifyViewToolbar.bmp">
+      <Filter>Plugins\IdentifyView\Resources</Filter>
+    </None>
+    <None Include="res\SummaryViewToolbar.bmp">
+      <Filter>Plugins\SummaryView\Resources</Filter>
+    </None>
+    <None Include="res\template.htm">
+      <Filter>Plugins\SummaryView\Resources</Filter>
+    </None>
+    <None Include="README.txt" />
+    <None Include="res\html3.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ItemAssistant.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,94 @@
+<html>
+<head>
+<style type="text/css">
+
+body {
+   font-family: "Arial";
+   font-size: 11pt;
+   margin: 0;
+   padding: 0;
+   background: #EEEEEE;
+   color : #AAAAAA;
+}
+
+h1 {
+   border-bottom: 2px solid black;
+   font-size: 110%;
+   font-weight: bold;
+   color : black;
+}
+
+h2 {
+   border-bottom: 1px dotted black;
+   font-size: 100%;
+   font-weight: bold;
+   color : black;
+}
+
+#summarytbl {
+   font-family: Lucidatypewriter, monospace;
+   padding: 2px;
+   border: 1px solid grey;
+}
+
+#summarytbl tr {
+   background: #F5F5F5;
+}
+
+#summarytbl td {
+   padding: 1px 10px;
+}
+
+#resulttbl {
+   font-family: Lucidatypewriter, monospace;
+   padding: 2px;
+   border: 1px solid grey;
+   text-align: center;
+}
+
+#resulttbl tr {
+   background: #F5F5F5;
+}
+
+#resulttbl td, th {
+   padding: 1px 10px;
+}
+
+#wrapper {
+   padding: 1em;
+   margin: 10px;
+   border: 2px solid black;
+   background: white;
+}
+
+#closebtn {
+   float: right;
+   display: inline;
+}
+
+.centered {
+   text-align: center;
+}
+
+.centered table {
+   margin: 0.5em auto;
+   text-align: left;
+}
+
+
+</style>
+</head>
+<body>
+
+<div id="wrapper">
+<h1>Item list</h1>
+
+<h2>%TITLE%</h2>
+<table id="resulttbl">
+%RESULT_TABLE%
+</table>
+
+</div>
+
+</body>
+</html>
